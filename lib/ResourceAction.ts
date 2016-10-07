@@ -16,6 +16,10 @@ export function ResourceAction(action?: ResourceActionBase) {
     action.method = RequestMethod.Get;
   }
 
+  if (action.useModel === undefined) {
+    action.useModel === true;
+  }
+
 
   return function (target: Resource, propertyKey: string) {
 
@@ -24,8 +28,11 @@ export function ResourceAction(action?: ResourceActionBase) {
       let isGetRequest = action.method === RequestMethod.Get;
 
       let ret: ResourceResult<any> | ResourceModel;
+      let resourceModel;
 
-      let resourceModel = action.model || this.constructor['model'];
+      if (action.useModel) {
+        resourceModel = action.model || this.constructor['model'];
+      }
 
       if (resourceModel && !action.isArray) {
         ret = resourceModel.create({}, false);

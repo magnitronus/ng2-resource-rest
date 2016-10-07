@@ -43,6 +43,7 @@ export interface ResourceActionBase extends ResourceParamsCommon {
   map?: ResourceResponseMap;
   filter?: ResourceResponseFilter;
   model?: Type<ResourceModel>;
+  useModel?: boolean;
 }
 
 export interface ResourceMethod<I, O> {

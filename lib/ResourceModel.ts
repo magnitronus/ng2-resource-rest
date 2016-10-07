@@ -30,7 +30,7 @@ export class ResourceModel {
   $primaryKey: string = 'id';
   $resource: Resource;
 
-  static create(data: any = {}, commit: boolean = true) {
+  static create(data: any = {}, commit: boolean = true): ResourceModel {
     if (!this.resourceInstance) {
       console.error('You should first instantiate Resource by injecting.');
     }
@@ -38,17 +38,17 @@ export class ResourceModel {
     if (commit) {
       result = result.$save();
     }
-    return result;
+    return <ResourceModel>result;
   }
 
-  public $fillFromObject(_object: any) {
+  public $fillFromObject(_object: any): ResourceModel {
     for (let propName in _object) {
       (<any>this)[propName] = _object[propName];
     }
-    return this;
+    return <ResourceModel>this;
   }
 
-  public $getData() {
+  public $getData(): any {
     let _object: any = {};
     for (let propName in this) {
       if (!((<any>this)[propName] instanceof Function) && !(propName.charAt(0) === '$')) {
@@ -58,23 +58,23 @@ export class ResourceModel {
     return _object;
   }
 
-  public $save() {
+  public $save(): ResourceModel {
     if ((<any>this)[this.$primaryKey]) {
-      return this.$update();
+      return <ResourceModel>this.$update();
     } else {
-      return this.$create();
+      return <ResourceModel>this.$create();
     }
   }
 
-  public $update() {
-    return this.$resource_method('update');
+  public $update(): ResourceModel {
+    return <ResourceModel>this.$resource_method('update');
   }
 
-  public $remove() {
-    return this.$resource_method('remove');
+  public $remove(): ResourceModel {
+    return <ResourceModel>this.$resource_method('remove');
   }
 
-  private $resource_method(method_name: string) {
+  private $resource_method(method_name: string): ResourceModel {
     let _method = (<any>this.$resource)[method_name];
     if (!_method) {
       console.error(`Your Resource has no implemented ${method_name} method.`);
@@ -89,11 +89,11 @@ export class ResourceModel {
     this.$observable.subscribe(resp => {
       this.$fillFromObject(resp.$getData());
     });
-    return this
+    return <ResourceModel>this
   }
 
-  private $create() {
-    return this.$resource_method('create');
+  private $create(): ResourceModel {
+    return <ResourceModel>this.$resource_method('create');
   }
 
 }

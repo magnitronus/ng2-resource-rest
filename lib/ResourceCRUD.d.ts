@@ -1,7 +1,7 @@
 import { Resource } from './Resource';
 import { ResourceMethod } from './Interfaces';
 export declare class ResourceCRUD<TQuery, TShort, TFull> extends Resource {
-    query: ResourceMethod<TQuery, TShort>;
+    query: ResourceMethod<TQuery, TShort[]>;
     get: ResourceMethod<{
         id: any;
     }, TFull>;

@@ -1,7 +1,7 @@
 import { Resource } from './Resource';
 import { ResourceMethod } from './Interfaces';
 export declare class ResourceCRUDBase<TQuery, TKeys, TShort, TFull> extends Resource {
-    query: ResourceMethod<TQuery, TShort>;
+    query: ResourceMethod<TQuery, TShort[]>;
     get: ResourceMethod<TKeys, TFull>;
     save: ResourceMethod<TFull, TFull>;
     update: ResourceMethod<TFull, TFull>;

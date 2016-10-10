@@ -11,7 +11,7 @@ export declare class ResourceModel {
     $abortRequest: () => void;
     $primaryKey: string;
     $resource: Resource;
-    static create(data?: any, commit?: boolean): this;
+    static create(data?: any, commit?: boolean): ResourceModel;
     $fillFromObject(_object: any): this;
     $getData(): any;
     $save(): this;

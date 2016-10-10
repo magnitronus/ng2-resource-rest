@@ -17,7 +17,7 @@ export function ResourceAction(action?: ResourceActionBase) {
   }
 
   if (action.useModel === undefined) {
-    action.useModel === true;
+    action.useModel = true;
   }
 
 

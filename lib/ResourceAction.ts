@@ -191,9 +191,17 @@ export function ResourceAction(action?: ResourceActionBase) {
           for (let key in searchParams) {
             if (!usedPathParams[key]) {
               let value: any = searchParams[key];
-              if (typeof value === 'object') {
+              if (Array.isArray(value)) {
+                for (let arr_value in value) {
+                  search.append(key, arr_value);
+                }
+                continue;
+              }
+              else if (typeof value === 'object') {
                 // if (value instanceof Object) {
                 value = JSON.stringify(value);
+                search.append(key, value);
+                continue;
               }
               search.append(key, value);
             }

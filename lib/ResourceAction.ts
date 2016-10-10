@@ -192,7 +192,7 @@ export function ResourceAction(action?: ResourceActionBase) {
             if (!usedPathParams[key]) {
               let value: any = searchParams[key];
               if (Array.isArray(value)) {
-                for (let arr_value in value) {
+                for (let arr_value of value) {
                   search.append(key, arr_value);
                 }
                 continue;

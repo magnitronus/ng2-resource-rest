@@ -31,7 +31,11 @@ export function ResourceAction(action?: ResourceActionBase) {
       let resourceModel;
 
       if (action.useModel) {
-        resourceModel = action.model || this.constructor['model'];
+        if (this.constructor.hasOwnProperty('getResourceModel') && !action.model) {
+          resourceModel = this.constructor.getResourceModel(args);
+        } else {
+          resourceModel = action.model || this.constructor['model'];
+        }
       }
 
       if (resourceModel && !action.isArray) {

@@ -7,9 +7,6 @@ manifest.mf
 build.xml
 node_modules/*
 npm-debug.log
-*.js
-*.map
-*.d.ts
 !make.js
 !bundles/*.js
 *.metadata.json

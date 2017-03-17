@@ -15,7 +15,6 @@ npm-debug.log
 !make.js
 !examples/**/*.js
 coverage
-bundles
 
 #################
 ## JetBrains

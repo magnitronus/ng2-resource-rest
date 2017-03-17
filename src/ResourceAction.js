@@ -233,63 +233,64 @@ export function ResourceAction(methodOptions) {
                 }
                 // Doing the request
                 var requestObservable = _this._request(req, methodOptions);
-                var handleResponse = function (resp) {
-                    if (resp !== null) {
-                        var map = methodOptions.map ? methodOptions.map : _this.map;
-                        var filter = methodOptions.filter ? methodOptions.filter : _this.filter;
-                        if (methodOptions.isArray) {
-                            if (!Array.isArray(resp)) {
-                                console.error('Returned data should be an array. Received', resp);
-                            }
-                            else {
-                                resp = resp.filter(filter).map(map);
-                                resp = !!resourceModel ? mapToModel.bind(_this)(resp, resourceModel) : resp;
-                                Array.prototype.push.apply(ret, resp);
-                            }
-                        }
-                        else {
-                            if (Array.isArray(resp)) {
-                                console.error('Returned data should be an object. Received', resp);
-                            }
-                            else {
-                                if (filter(resp)) {
-                                    resp = map(resp);
-                                    if (!!resourceModel) {
-                                        ret.$fillFromObject(resp);
-                                    }
-                                    else {
-                                        Object.assign(ret, resp);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    return resp;
-                };
                 // noinspection TypeScriptValidateTypes
                 // requestObservable = methodOptions.responseInterceptor ?
                 //   methodOptions.responseInterceptor(requestObservable, req, methodOptions) :
                 //   this.responseInterceptor(requestObservable, req, methodOptions);
                 if (ResourceGlobalConfig.mockResponses && resourceOptions.mock !== false && methodOptions.mock !== false && (!!methodOptions.mockCollection || !!resourceOptions.mockCollection)) {
-                    mainObservable = Observable.create(function (subscriber) {
-                        var mockCollection = !!methodOptions.mockCollection ? methodOptions.mockCollection : { collection: resourceOptions.mockCollection };
-                        var resp = null;
-                        if (typeof mockCollection === 'function') {
-                            resp = mockCollection(propertyKey, usedPathParamsValues, JSON.parse(body), methodOptions.method);
-                        }
-                        else {
-                            resp = getMockedResponse(mockCollection, usedPathParamsValues, JSON.parse(body), methodOptions.method);
-                        }
-                        subscriber.next(handleResponse(resp));
-                    });
+                    var mockCollection = !!methodOptions.mockCollection ? methodOptions.mockCollection : { collection: resourceOptions.mockCollection };
+                    var resp = null;
+                    if (typeof mockCollection === 'function') {
+                        resp = mockCollection(propertyKey, usedPathParamsValues, JSON.parse(body), methodOptions.method);
+                    }
+                    else {
+                        resp = getMockedResponse(mockCollection, usedPathParamsValues, JSON.parse(body), methodOptions.method);
+                    }
+                    resp = new FakeResponse(resp);
+                    requestObservable = Observable.from([resp]);
+                    // noinspection TypeScriptValidateTypes
+                    requestObservable = methodOptions.responseInterceptor ?
+                        methodOptions.responseInterceptor(requestObservable, req, methodOptions) :
+                        _this.responseInterceptor(requestObservable, req, methodOptions);
                 }
-                else if (methodOptions.isLazy) {
+                ;
+                if (methodOptions.isLazy) {
                     mainObservable = requestObservable;
                 }
                 else {
                     mainObservable = Observable.create(function (subscriber) {
                         var reqSubscr = requestObservable.subscribe(function (resp) {
-                            subscriber.next(handleResponse(resp));
+                            if (resp !== null) {
+                                var map = methodOptions.map ? methodOptions.map : _this.map;
+                                var filter = methodOptions.filter ? methodOptions.filter : _this.filter;
+                                if (methodOptions.isArray) {
+                                    if (!Array.isArray(resp)) {
+                                        console.error('Returned data should be an array. Received', resp);
+                                    }
+                                    else {
+                                        resp = resp.filter(filter).map(map);
+                                        resp = !!resourceModel ? mapToModel.bind(_this)(resp, resourceModel) : resp;
+                                        Array.prototype.push.apply(ret, resp);
+                                    }
+                                }
+                                else {
+                                    if (Array.isArray(resp)) {
+                                        console.error('Returned data should be an object. Received', resp);
+                                    }
+                                    else {
+                                        if (filter(resp)) {
+                                            resp = map(resp);
+                                            if (!!resourceModel) {
+                                                ret.$fillFromObject(resp);
+                                            }
+                                            else {
+                                                Object.assign(ret, resp);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            subscriber.next(resp);
                         }, function (err) { return subscriber.error(err); }, function () {
                             ret.$resolved = true;
                             subscriber.complete();
@@ -392,6 +393,21 @@ function getValueForPath(key, params, data, usedPathParams) {
 function isNullOrUndefined(value) {
     return value === null || value === undefined;
 }
+var FakeResponse = (function () {
+    function FakeResponse(resp) {
+        var _this = this;
+        this.json = function () { return _this._resp; };
+        this._resp = resp;
+    }
+    Object.defineProperty(FakeResponse.prototype, "_body", {
+        get: function () {
+            return JSON.stringify(this._resp);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return FakeResponse;
+}());
 function getMockedResponse(collection, params, data, requestMethod) {
     if (requestMethod === RequestMethod.Get) {
         if (Object.keys(params).length === 0) {

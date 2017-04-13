@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Rx';
-import { Request, RequestMethod } from '@angular/http';
+import { Request, RequestMethod, QueryEncoder } from '@angular/http';
 import { Type } from '@angular/core';
 import { ResourceModel } from './ResourceModel';
 import { Resource } from './Resource';
@@ -52,6 +52,7 @@ export interface ResourceActionBase extends ResourceParamsCommon {
         lookupParams?: any;
     } | any;
     mock?: boolean;
+    queryEncoder?: Type<QueryEncoder>;
 }
 export interface ResourceMethod<I, O> {
     (data?: I, callback?: (res: O) => any): ResourceResult<O>;

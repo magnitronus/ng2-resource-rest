@@ -179,7 +179,7 @@ export function ResourceAction(methodOptions) {
                     searchParams = defPathParams;
                 }
                 // Setting search params
-                var search = new URLSearchParams();
+                var search = !!methodOptions.queryEncoder ? new URLSearchParams('', new methodOptions.queryEncoder()) : new URLSearchParams();
                 if (!params) {
                     for (var key in searchParams) {
                         if (searchParams.hasOwnProperty(key) && !usedPathParams[key]) {

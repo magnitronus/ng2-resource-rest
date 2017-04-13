@@ -219,7 +219,7 @@ export function ResourceAction(methodOptions?: ResourceActionBase) {
 
 
           // Setting search params
-          let search: URLSearchParams = new URLSearchParams();
+          let search: URLSearchParams = !!methodOptions.queryEncoder ? new URLSearchParams('', new methodOptions.queryEncoder()) : new URLSearchParams();
 
           if (!params) {
             for (let key in searchParams) {

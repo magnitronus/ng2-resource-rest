@@ -119,7 +119,7 @@ var Resource = (function () {
         var requestObservable = this.http.request(req);
         // noinspection TypeScriptValidateTypes
         return methodOptions.responseInterceptor ?
-            methodOptions.responseInterceptor(requestObservable, req, methodOptions) :
+            methodOptions.responseInterceptor.bind(this)(requestObservable, req, methodOptions) :
             this.responseInterceptor(requestObservable, req, methodOptions);
     };
     Resource.prototype._getUrl = function (methodOptions) {

@@ -45,7 +45,7 @@ export function ResourceAction(methodOptions) {
                         data = data.toJSON ? data.toJSON() : toJSON(data);
                     }
                     else {
-                        ret = initObject();
+                        ret = initObject.bind(this)();
                     }
                 }
             }
@@ -261,7 +261,7 @@ export function ResourceAction(methodOptions) {
                                             .map(map)
                                             .map(function (respItem) {
                                             respItem.$resource = _this;
-                                            return setDataToObject(initObject(), respItem);
+                                            return setDataToObject(initObject.bind(respItem.$resource)(), respItem);
                                         }));
                                     }
                                 }

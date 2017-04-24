@@ -59,7 +59,7 @@ export function ResourceAction(methodOptions?: ResourceActionBase) {
             data = data.toJSON ? data.toJSON() : toJSON(data);
 
           } else {
-            ret = initObject();
+            ret = initObject.bind(this)();
           }
 
         }
@@ -324,7 +324,7 @@ export function ResourceAction(methodOptions?: ResourceActionBase) {
                             .map(map)
                             .map((respItem: any) => {
                               respItem.$resource = this;
-                              return setDataToObject(initObject(), respItem);
+                              return setDataToObject(initObject.bind(respItem.$resource)(), respItem);
                             })
                         );
 

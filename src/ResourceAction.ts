@@ -40,7 +40,7 @@ export function ResourceAction(methodOptions?: ResourceActionBase) {
 
       let ret: ResourceResult<any> | ResourceModel<Resource> = null;
 
-      let map: ResourceResponseMap = methodOptions.map ? methodOptions.map : this.map;
+      let map: ResourceResponseMap = methodOptions.map ? methodOptions.map.bind(this) : this.map;
       let filter: ResourceResponseFilter = methodOptions.filter ? methodOptions.filter : this.filter;
       let initObject: ResourceResponseInitResult = methodOptions.initResultObject ?
         methodOptions.initResultObject : this.initResultObject;

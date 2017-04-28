@@ -27,7 +27,7 @@ export function ResourceAction(methodOptions) {
             var resourceOptions = this.getResourceOptions();
             var isGetRequest = methodOptions.method === RequestMethod.Get;
             var ret = null;
-            var map = methodOptions.map ? methodOptions.map : this.map;
+            var map = methodOptions.map ? methodOptions.map.bind(this) : this.map;
             var filter = methodOptions.filter ? methodOptions.filter : this.filter;
             var initObject = methodOptions.initResultObject ?
                 methodOptions.initResultObject : this.initResultObject;

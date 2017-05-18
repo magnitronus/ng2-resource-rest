@@ -14,7 +14,7 @@ export * from './src/ResourceStorage';
 export * from './src/ResourceStorageParams';
 var ResourceModule = (function () {
     function ResourceModule() {
-        ReflectiveInjector.resolve(ResourceProviders.providers[ResourceProviders.mainProvidersName]);
+        ReflectiveInjector.resolveAndCreate(ResourceProviders.providers[ResourceProviders.mainProvidersName]);
     }
     ResourceModule.forRoot = function () {
         return {

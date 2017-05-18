@@ -1,4 +1,4 @@
-import { NgModule, ReflectiveInjector } from '@angular/core';
+import { Injector, NgModule, ReflectiveInjector } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { ResourceProviders } from './src/ResourceProviders';
@@ -13,7 +13,9 @@ export * from './src/ResourceProviders';
 export * from './src/ResourceStorage';
 export * from './src/ResourceStorageParams';
 var ResourceModule = (function () {
-    function ResourceModule() {
+    function ResourceModule(_injector) {
+        this._injector = _injector;
+        console.log(this._injector);
         var providers = ResourceProviders.providers[ResourceProviders.mainProvidersName];
         var injector = ReflectiveInjector.resolveAndCreate(providers);
         providers.forEach(function (provider) { return injector.get(provider); });
@@ -39,4 +41,6 @@ ResourceModule.decorators = [
             },] },
 ];
 /** @nocollapse */
-ResourceModule.ctorParameters = function () { return []; };
+ResourceModule.ctorParameters = function () { return [
+    { type: Injector, },
+]; };

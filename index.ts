@@ -1,4 +1,4 @@
-import {ModuleWithProviders, NgModule, ReflectiveInjector} from '@angular/core';
+import {Injector, ModuleWithProviders, NgModule, ReflectiveInjector} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { ResourceProviders } from './src/ResourceProviders';
@@ -20,7 +20,8 @@ export * from './src/Interfaces';
 })
 export class ResourceModule {
 
-  constructor() {
+  constructor(private _injector: Injector) {
+    console.log(this._injector);
     let providers = ResourceProviders.providers[ResourceProviders.mainProvidersName];
     let injector = ReflectiveInjector.resolveAndCreate(providers);
     providers.forEach(provider => injector.get(provider));

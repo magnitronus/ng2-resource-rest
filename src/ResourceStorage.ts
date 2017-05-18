@@ -2,13 +2,16 @@
 import {ResourceStorageParamsBase} from "./Interfaces";
 import {Resource} from "./Resource";
 
+
 export class ResourceStorage<ModelType> {
 
   private _storage: ModelType[] = [];
   private _initialized: boolean;
 
-  constructor(private _resource: Resource, private _params: ResourceStorageParamsBase) {
+  static instances: {[key: string]: ResourceStorage<any>} = {};
 
+  constructor(private _resource: Resource, private _params: ResourceStorageParamsBase) {
+    ResourceStorage.instances[_resource.constructor.name] = this;
   }
 
   get data() {

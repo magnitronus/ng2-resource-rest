@@ -9,6 +9,7 @@ export * from './src/ResourceParams';
 export * from './src/ResourceProviders';
 export * from './src/ResourceStorage';
 export * from './src/ResourceStorageParams';
+export * from './src/ResourceStore';
 export * from './src/Interfaces';
 export declare class ResourceModule {
     private _injector;

@@ -3,6 +3,7 @@ var ResourceStorage = (function () {
         this._resource = _resource;
         this._params = _params;
         this._storage = [];
+        ResourceStorage.instances[_resource.constructor.name] = this;
     }
     Object.defineProperty(ResourceStorage.prototype, "data", {
         get: function () {
@@ -22,3 +23,4 @@ var ResourceStorage = (function () {
     return ResourceStorage;
 }());
 export { ResourceStorage };
+ResourceStorage.instances = {};

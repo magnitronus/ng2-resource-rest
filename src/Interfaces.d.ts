@@ -73,3 +73,6 @@ export interface ResourceStorageParamsBase {
     action?: string;
     actionParams?: any;
 }
+export interface NgModule {
+    resources?: Type<Resource>[];
+}

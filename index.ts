@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import {ModuleWithProviders, NgModule, ReflectiveInjector} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { ResourceProviders } from './src/ResourceProviders';
@@ -19,6 +19,11 @@ export * from './src/Interfaces';
   imports: [CommonModule, HttpModule]
 })
 export class ResourceModule {
+
+  constructor() {
+    ReflectiveInjector.resolve(ResourceProviders.providers[ResourceProviders.mainProvidersName])
+  }
+
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: ResourceModule,

@@ -11,6 +11,7 @@ export * from './src/ResourceStorage';
 export * from './src/ResourceStorageParams';
 export * from './src/Interfaces';
 export declare class ResourceModule {
+    constructor();
     static forRoot(): ModuleWithProviders;
     static forChild(subSet: string): ModuleWithProviders;
 }

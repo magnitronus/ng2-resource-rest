@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ReflectiveInjector } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { ResourceProviders } from './src/ResourceProviders';
@@ -14,6 +14,7 @@ export * from './src/ResourceStorage';
 export * from './src/ResourceStorageParams';
 var ResourceModule = (function () {
     function ResourceModule() {
+        ReflectiveInjector.resolve(ResourceProviders.providers[ResourceProviders.mainProvidersName]);
     }
     ResourceModule.forRoot = function () {
         return {

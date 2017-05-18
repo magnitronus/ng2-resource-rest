@@ -21,7 +21,9 @@ export * from './src/Interfaces';
 export class ResourceModule {
 
   constructor() {
-    ReflectiveInjector.resolveAndCreate(ResourceProviders.providers[ResourceProviders.mainProvidersName]);
+    let providers = ResourceProviders.providers[ResourceProviders.mainProvidersName];
+    let injector = ReflectiveInjector.resolveAndCreate(providers);
+    providers.forEach(provider => injector.get(provider));
   }
 
   static forRoot(): ModuleWithProviders {

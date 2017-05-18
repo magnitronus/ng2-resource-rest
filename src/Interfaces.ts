@@ -79,3 +79,8 @@ export type ResourceResult<R extends {}> = R & {
   $abortRequest?: () => void;
   $resource?: Resource;
 };
+
+export interface ResourceStorageParamsBase {
+  action?: string;
+  actionParams?: any;
+}

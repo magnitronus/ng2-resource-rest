@@ -10,6 +10,8 @@ export * from './src/ResourceGlobalConfig';
 export * from './src/ResourceModel';
 export * from './src/ResourceParams';
 export * from './src/ResourceProviders';
+export * from './src/ResourceStorage';
+export * from './src/ResourceStorageParams';
 var ResourceModule = (function () {
     function ResourceModule() {
     }

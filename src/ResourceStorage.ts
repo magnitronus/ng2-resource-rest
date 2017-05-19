@@ -54,21 +54,15 @@ export class ResourceStorage<ModelType> {
 
   constructor(private _resource: Resource, private _params: ResourceStorageParamsBase) {
     ResourceStorage.instances[_resource.constructor.name] = this;
-    const resourceStores = ResourceStorage.stores.addStore(_resource.constructor.name);
-    resourceStores.setData(this);
   }
 
   get data() {
     if (!this._initialized) {
       this._initialized = true;
-      this._resource.initialized
-        .filter(val => val)
-        .subscribe(() => {
-          const action = (<any>this._resource)[this._params.action];
-          action.bind(this._resource)(this._params.actionParams)
-            .$observable
-            .subscribe((models: ModelType[]) => this._storage = models);
-        });
+      const action = (<any>this._resource)[this._params.action];
+      action.bind(this._resource)(this._params.actionParams)
+        .$observable
+        .subscribe((models: ModelType[]) => this._storage = models);
     }
     return this._storage;
   }

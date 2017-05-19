@@ -5,7 +5,7 @@ import { ResourceGlobalConfig } from './ResourceGlobalConfig';
 import { ResourceParamsBase } from './Interfaces';
 import { ResourceActionBase } from './Interfaces';
 import { ResourceModel } from './ResourceModel';
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import { ResourceStorage } from './ResourceStorage';
 
 export class Resource {
 
@@ -14,11 +14,13 @@ export class Resource {
   private _headers: any = null;
   private _params: any = null;
   private _data: any = null;
-
-  initialized: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private _storage: ResourceStorage<any>;
 
   constructor(protected http: Http, protected injector: Injector) {
-    this.initialized.next(true);
+    const resourceStores = ResourceStorage.stores.addStore(this.constructor.name);
+    if (this._storage) {
+      resourceStores.setData(this._storage);
+    }
   }
 
   /**

@@ -47,22 +47,16 @@ var ResourceStorage = (function () {
         this._params = _params;
         this._storage = [];
         ResourceStorage.instances[_resource.constructor.name] = this;
-        var resourceStores = ResourceStorage.stores.addStore(_resource.constructor.name);
-        resourceStores.setData(this);
     }
     Object.defineProperty(ResourceStorage.prototype, "data", {
         get: function () {
             var _this = this;
             if (!this._initialized) {
                 this._initialized = true;
-                this._resource.initialized
-                    .filter(function (val) { return val; })
-                    .subscribe(function () {
-                    var action = _this._resource[_this._params.action];
-                    action.bind(_this._resource)(_this._params.actionParams)
-                        .$observable
-                        .subscribe(function (models) { return _this._storage = models; });
-                });
+                var action = this._resource[this._params.action];
+                action.bind(this._resource)(this._params.actionParams)
+                    .$observable
+                    .subscribe(function (models) { return _this._storage = models; });
             }
             return this._storage;
         },

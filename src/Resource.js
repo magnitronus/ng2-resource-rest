@@ -1,5 +1,5 @@
 import { ResourceGlobalConfig } from './ResourceGlobalConfig';
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { ResourceStorage } from './ResourceStorage';
 var Resource = (function () {
     function Resource(http, injector) {
         this.http = http;
@@ -9,8 +9,10 @@ var Resource = (function () {
         this._headers = null;
         this._params = null;
         this._data = null;
-        this.initialized = new BehaviorSubject(false);
-        this.initialized.next(true);
+        var resourceStores = ResourceStorage.stores.addStore(this.constructor.name);
+        if (this._storage) {
+            resourceStores.setData(this._storage);
+        }
     }
     /**
      * Get main url of the resource

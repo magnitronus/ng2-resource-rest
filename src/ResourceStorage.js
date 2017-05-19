@@ -1,12 +1,54 @@
+var Stores = (function () {
+    function Stores(store) {
+        this._stores = [];
+        if (store) {
+            this._stores.push(store);
+        }
+    }
+    Stores.prototype.push = function (val) {
+        if (this._storage) {
+            val.target[val.propertyKey] = this._storage.data;
+        }
+        this._stores.push(val);
+    };
+    Stores.prototype.setData = function (storage) {
+        this._storage = storage;
+        this._stores.forEach(function (store) { return store.target[store.propertyKey] = storage.data; });
+    };
+    Object.defineProperty(Stores.prototype, "stores", {
+        get: function () {
+            return this._stores;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return Stores;
+}());
+export { Stores };
+var StoresHash = (function () {
+    function StoresHash() {
+        this._storesHash = {};
+    }
+    StoresHash.prototype.addStore = function (resourceName, store) {
+        if (this._storesHash[resourceName] && store) {
+            this._storesHash[resourceName].push(store);
+        }
+        else if (!this._storesHash[resourceName]) {
+            this._storesHash[resourceName] = new Stores(store);
+        }
+        return this._storesHash[resourceName];
+    };
+    return StoresHash;
+}());
+export { StoresHash };
 var ResourceStorage = (function () {
     function ResourceStorage(_resource, _params) {
-        var _this = this;
         this._resource = _resource;
         this._params = _params;
         this._storage = [];
         ResourceStorage.instances[_resource.constructor.name] = this;
-        var resourceStores = ResourceStorage.stores[_resource.constructor.name] || [];
-        resourceStores.forEach(function (store) { return store.target[store.propertyKey] = _this.data; });
+        var resourceStores = ResourceStorage.stores.addStore(_resource.constructor.name);
+        resourceStores.setData(this);
     }
     Object.defineProperty(ResourceStorage.prototype, "data", {
         get: function () {
@@ -27,4 +69,4 @@ var ResourceStorage = (function () {
 }());
 export { ResourceStorage };
 ResourceStorage.instances = {};
-ResourceStorage.stores = {};
+ResourceStorage.stores = new StoresHash();

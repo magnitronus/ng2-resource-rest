@@ -8,6 +8,12 @@ export declare class ResourceStorage<ModelType> {
     static instances: {
         [key: string]: ResourceStorage<any>;
     };
+    static stores: {
+        [key: string]: {
+            target: any;
+            propertyKey: string;
+        }[];
+    };
     constructor(_resource: Resource, _params: ResourceStorageParamsBase);
     readonly data: ModelType[];
 }

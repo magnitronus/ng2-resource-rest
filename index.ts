@@ -23,7 +23,7 @@ export class ResourceModule {
 
   constructor(private _injector: Injector) {
     let providers = ResourceProviders.providers[ResourceProviders.mainProvidersName];
-    providers.forEach(provider => this._injector.get(provider));
+    providers.forEach(provider => this._injector.get((<any>provider).provide));
   }
 
   static forRoot(): ModuleWithProviders {

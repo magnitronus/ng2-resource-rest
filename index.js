@@ -18,7 +18,7 @@ var ResourceModule = (function () {
         var _this = this;
         this._injector = _injector;
         var providers = ResourceProviders.providers[ResourceProviders.mainProvidersName];
-        providers.forEach(function (provider) { return _this._injector.get(provider); });
+        providers.forEach(function (provider) { return _this._injector.get(provider.provide); });
     }
     ResourceModule.forRoot = function () {
         return {

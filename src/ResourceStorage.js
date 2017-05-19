@@ -55,10 +55,14 @@ var ResourceStorage = (function () {
             var _this = this;
             if (!this._initialized) {
                 this._initialized = true;
-                var action = this._resource[this._params.action];
-                action(this._params.actionParams)
-                    .bind(this._resource)
-                    .subscribe(function (models) { return _this._storage = models; });
+                this._resource.initialized
+                    .filter(function (val) { return val; })
+                    .subscribe(function () {
+                    var action = _this._resource[_this._params.action];
+                    action.bind(_this._resource)(_this._params.actionParams)
+                        .$observable
+                        .subscribe(function (models) { return _this._storage = models; });
+                });
             }
             return this._storage;
         },

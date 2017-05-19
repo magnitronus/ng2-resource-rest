@@ -5,6 +5,7 @@ import { ResourceGlobalConfig } from './ResourceGlobalConfig';
 import { ResourceParamsBase } from './Interfaces';
 import { ResourceActionBase } from './Interfaces';
 import { ResourceModel } from './ResourceModel';
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 export class Resource {
 
@@ -14,7 +15,11 @@ export class Resource {
   private _params: any = null;
   private _data: any = null;
 
-  constructor(protected http: Http, protected injector: Injector) {}
+  initialized: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  constructor(protected http: Http, protected injector: Injector) {
+    this.initialized.next(true);
+  }
 
   /**
    * Get main url of the resource

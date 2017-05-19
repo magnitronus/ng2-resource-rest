@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Rx';
 import { ResourceParamsBase } from './Interfaces';
 import { ResourceActionBase } from './Interfaces';
 import { ResourceModel } from './ResourceModel';
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 export declare class Resource {
     protected http: Http;
     protected injector: Injector;
@@ -12,6 +13,7 @@ export declare class Resource {
     private _headers;
     private _params;
     private _data;
+    initialized: BehaviorSubject<boolean>;
     constructor(http: Http, injector: Injector);
     /**
      * Get main url of the resource

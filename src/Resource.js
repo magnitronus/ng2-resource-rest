@@ -1,4 +1,5 @@
 import { ResourceGlobalConfig } from './ResourceGlobalConfig';
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 var Resource = (function () {
     function Resource(http, injector) {
         this.http = http;
@@ -8,6 +9,8 @@ var Resource = (function () {
         this._headers = null;
         this._params = null;
         this._data = null;
+        this.initialized = new BehaviorSubject(false);
+        this.initialized.next(true);
     }
     /**
      * Get main url of the resource

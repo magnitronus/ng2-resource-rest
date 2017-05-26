@@ -11,6 +11,7 @@ var ResourceStorage = (function () {
         }
     }
     ResourceStorage.prototype.updateParams = function (params) {
+        if (params === void 0) { params = {}; }
         this.queryActionName = params.queryActionName || 'query';
         this.queryParams = params.queryParams || {};
         this.loadImmediately = params.loadImmediately === false ? false : true;

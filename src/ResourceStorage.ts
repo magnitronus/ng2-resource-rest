@@ -16,7 +16,7 @@ export class ResourceStorage {
     }
   }
 
-  updateParams(params: ResourceStorageParams) {
+  updateParams(params: ResourceStorageParams = <any>{}) {
     this.queryActionName = params.queryActionName || 'query';
     this.queryParams = params.queryParams || {};
     this.loadImmediately = params.loadImmediately === false ? false : true;

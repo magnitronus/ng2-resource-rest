@@ -17,13 +17,9 @@ var ResourceStorage = (function () {
         this.loadImmediately = params.loadImmediately === false ? false : true;
     };
     ResourceStorage.prototype.load = function (args) {
-        var _this = this;
         var qp = !!args ? args : this.queryParams;
         var action = this.resource.instance[this.queryActionName].bind(this.resource.instance);
-        action(qp).$observable
-            .subscribe(function (items) {
-            _this._data = items;
-        });
+        this._data = action(qp);
     };
     Object.defineProperty(ResourceStorage.prototype, "result", {
         get: function () {

@@ -3,6 +3,18 @@ import { Request, RequestMethod, QueryEncoder } from '@angular/http';
 import { Type } from '@angular/core';
 import { ResourceModel } from './ResourceModel';
 import { Resource } from './Resource';
+import { NgModule } from '@angular/core/src/metadata/ng_module';
+import { TypeDecorator } from '@angular/core/src/util/decorators';
+declare module '@angular/core' {
+    interface NgModuleExtended extends NgModule {
+        resources?: any[];
+    }
+    interface NgModuleDecorator {
+        (obj?: NgModuleExtended): TypeDecorator;
+        new (obj?: NgModuleExtended): NgModuleExtended;
+    }
+    const NgModule: NgModuleDecorator;
+}
 export interface ResourceRequestInterceptor {
     (req: Request, methodOptions?: ResourceActionBase): Request;
 }
@@ -18,7 +30,7 @@ export interface ResourceResponseInitResult {
 export interface ResourceResponseFilter {
     (item: any): boolean;
 }
-export interface ResourceParamsCommon {
+export interface ResourceParamsBase {
     url?: string;
     path?: string;
     headers?: any;
@@ -31,11 +43,7 @@ export interface ResourceParamsCommon {
     mockCollection?: any;
     [propName: string]: any;
 }
-export interface ResourceParamsBase extends ResourceParamsCommon {
-    add2Provides?: boolean;
-    providersSubSet?: string;
-}
-export interface ResourceActionBase extends ResourceParamsCommon {
+export interface ResourceActionBase extends ResourceParamsBase {
     method?: RequestMethod;
     isArray?: boolean;
     isLazy?: boolean;
@@ -69,8 +77,8 @@ export declare type ResourceResult<R extends {}> = R & {
     $abortRequest?: () => void;
     $resource?: Resource;
 };
-export declare type SelectedStorage = {
-    $load: (args: any) => void;
+export declare type SelectedStorage<T> = ResourceResult<T> & {
+    $load: (args?: any) => void;
 };
 export interface ResourceStorageParams {
     queryActionName?: string;

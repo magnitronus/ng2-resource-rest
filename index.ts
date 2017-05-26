@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule, Injector } from '@angular/core';
+import { ModuleWithProviders, NgModule, Injector, ApplicationModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { ResourceProviders } from './src/ResourceProviders';
@@ -21,7 +21,8 @@ export * from './src/Interfaces';
 })
 export class ResourceModule {
 
-  constructor(private _injector: Injector) {
+  constructor(private _injector: Injector, private appModule: ApplicationModule) {
+    console.log(this.appModule);
     let providers = ResourceProviders.providers[ResourceProviders.mainProvidersName];
     providers.forEach(provider => this._injector.get((<any>provider).provide));
   }

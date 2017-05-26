@@ -26,10 +26,7 @@ export class ResourceStorage {
   load(args?: any) {
     const qp = !!args ? args : this.queryParams;
     const action = (<any>this.resource).instance[this.queryActionName].bind((<any>this.resource).instance);
-    action(qp).$observable
-      .subscribe((items: any) => {
-        this._data = items;
-      });
+    this._data = action(qp);
   }
 
   get result(): any {

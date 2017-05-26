@@ -1,4 +1,4 @@
-import { ModuleWithProviders, Injector } from '@angular/core';
+import { ModuleWithProviders, Injector, ApplicationModule } from '@angular/core';
 export * from './src/Resource';
 export * from './src/ResourceAction';
 export * from './src/ResourceCRUD';
@@ -13,7 +13,8 @@ export * from './src/SelectStorage';
 export * from './src/Interfaces';
 export declare class ResourceModule {
     private _injector;
-    constructor(_injector: Injector);
+    private appModule;
+    constructor(_injector: Injector, appModule: ApplicationModule);
     static forRoot(): ModuleWithProviders;
     static forChild(subSet: string): ModuleWithProviders;
 }

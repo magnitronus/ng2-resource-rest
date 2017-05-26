@@ -1,9 +1,11 @@
+import { EventEmitter } from "@angular/core";
 var ResourceStorage = (function () {
     function ResourceStorage(resource, params) {
         this.resource = resource;
         this.queryActionName = 'query';
         this.queryParams = {};
         this.loadImmediately = true;
+        this.onResultChange = new EventEmitter();
         this.updateParams(params);
         this.result = { $load: this.load.bind(this) };
         if (this.loadImmediately) {
@@ -21,6 +23,17 @@ var ResourceStorage = (function () {
         var action = this.resource.instance[this.queryActionName].bind(this.resource.instance);
         this.result = Object.assign({ $load: this.load.bind(this) }, action(qp));
     };
+    Object.defineProperty(ResourceStorage.prototype, "result", {
+        get: function () {
+            return this._result;
+        },
+        set: function (val) {
+            this._result = val;
+            this.onResultChange.emit(val);
+        },
+        enumerable: true,
+        configurable: true
+    });
     return ResourceStorage;
 }());
 export { ResourceStorage };

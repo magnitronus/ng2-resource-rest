@@ -9,6 +9,8 @@ export function SelectStorage(resource: Type<Resource>, params?: ResourceStorage
     const storage = ResourceStorages.getOrCreate(resource, params);
 
     (<any>target)[propertyKey] = storage.result;
+
+    storage.onResultChange.subscribe((_result: any) => (<any>target)[propertyKey] = _result);
   };
 
 }

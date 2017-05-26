@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { NgModule, Injector, NgModuleRef } from '@angular/core';
+import { NgModule, Injector } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { ResourceProviders } from './src/ResourceProviders';
@@ -23,13 +23,11 @@ export * from './src/ResourceStorage';
 export * from './src/ResourceStorages';
 export * from './src/SelectStorage';
 var ResourceModule = ResourceModule_1 = (function () {
-    function ResourceModule(_injector, _moduleRef) {
+    function ResourceModule(_injector) {
         var _this = this;
         this._injector = _injector;
-        this._moduleRef = _moduleRef;
-        console.log(this._moduleRef);
-        /*console.log(parent);
-        const metadata = (<any>Reflect).getMetadata('annotations',parent.constructor);
+        console.log(_injector);
+        /*const metadata = (<any>Reflect).getMetadata('annotations',parent.constructor);
         console.log(metadata);*/
         var providers = ResourceProviders.providers[ResourceProviders.mainProvidersName];
         providers.forEach(function (provider) { return _this._injector.get(provider.provide); });
@@ -52,7 +50,7 @@ ResourceModule = ResourceModule_1 = __decorate([
     NgModule({
         imports: [CommonModule, HttpModule]
     }),
-    __metadata("design:paramtypes", [Injector, NgModuleRef])
+    __metadata("design:paramtypes", [Injector])
 ], ResourceModule);
 export { ResourceModule };
 var ResourceModule_1;

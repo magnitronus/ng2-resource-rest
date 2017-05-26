@@ -1,4 +1,4 @@
-import {ModuleWithProviders, NgModule, Injector, NgModuleRef } from '@angular/core';
+import { ModuleWithProviders, NgModule, Injector } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { ResourceProviders } from './src/ResourceProviders';
@@ -21,10 +21,9 @@ export * from './src/Interfaces';
 })
 export class ResourceModule {
 
-  constructor(private _injector: Injector, private _moduleRef: NgModuleRef<any>) {
-    console.log(this._moduleRef)
-    /*console.log(parent);
-    const metadata = (<any>Reflect).getMetadata('annotations',parent.constructor);
+  constructor(private _injector: Injector) {
+    console.log(_injector);
+    /*const metadata = (<any>Reflect).getMetadata('annotations',parent.constructor);
     console.log(metadata);*/
     let providers = ResourceProviders.providers[ResourceProviders.mainProvidersName];
     providers.forEach(provider => this._injector.get((<any>provider).provide));

@@ -15,7 +15,9 @@ export class ResourceStorages {
 
   static get(resource: Type<Resource>, params?: ResourceStorageParams): ResourceStorage {
     const storage = this.storages[(<any>resource).name];
-    storage.updateParams(params);
+    if (!!storage) {
+      storage.updateParams(params);
+    }
     return storage;
   }
 

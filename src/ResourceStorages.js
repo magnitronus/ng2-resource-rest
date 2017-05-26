@@ -8,7 +8,9 @@ var ResourceStorages = (function () {
     };
     ResourceStorages.get = function (resource, params) {
         var storage = this.storages[resource.name];
-        storage.updateParams(params);
+        if (!!storage) {
+            storage.updateParams(params);
+        }
         return storage;
     };
     ResourceStorages.getOrCreate = function (resource, params) {

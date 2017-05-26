@@ -12,6 +12,7 @@ export * from './src/ResourceStorages';
 export * from './src/SelectStorage';
 export * from './src/Interfaces';
 export declare class ResourceModule {
+    constructor();
     static forRoot(): ModuleWithProviders;
     static forChild(subSet: string): ModuleWithProviders;
 }

@@ -1,4 +1,4 @@
-import { ResourceStorageParams } from "./Interfaces";
+import { ResourceStorageParams, SelectedStorage } from "./Interfaces";
 import { Resource } from "./Resource";
 import { Type } from "@angular/core";
 export declare class ResourceStorage {
@@ -6,9 +6,8 @@ export declare class ResourceStorage {
     private queryActionName;
     private queryParams;
     private loadImmediately;
-    private _data;
+    result: SelectedStorage<any>;
     constructor(resource: Type<Resource>, params: ResourceStorageParams);
     updateParams(params?: ResourceStorageParams): void;
     load(args?: any): void;
-    readonly result: any;
 }

@@ -4,7 +4,6 @@ var ResourceStorage = (function () {
         this.queryActionName = 'query';
         this.queryParams = {};
         this.loadImmediately = true;
-        this._data = {};
         this.updateParams(params);
         if (this.loadImmediately) {
             this.load();
@@ -19,15 +18,8 @@ var ResourceStorage = (function () {
     ResourceStorage.prototype.load = function (args) {
         var qp = !!args ? args : this.queryParams;
         var action = this.resource.instance[this.queryActionName].bind(this.resource.instance);
-        this._data = action(qp);
+        this.result = Object.assign({ $load: this.load.bind(this) }, action(qp));
     };
-    Object.defineProperty(ResourceStorage.prototype, "result", {
-        get: function () {
-            return Object.assign({}, this._data, { $load: this.load.bind(this) });
-        },
-        enumerable: true,
-        configurable: true
-    });
     return ResourceStorage;
 }());
 export { ResourceStorage };

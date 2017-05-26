@@ -1,4 +1,4 @@
-import {ResourceStorageParams} from "./Interfaces";
+import {ResourceStorageParams, SelectedStorage} from "./Interfaces";
 import {Resource} from "./Resource";
 import {Type} from "@angular/core";
 
@@ -8,7 +8,7 @@ export class ResourceStorage {
   private queryParams = {};
   private loadImmediately = true;
 
-  private _data = {};
+  result: SelectedStorage<any>;
 
   constructor(private resource: Type<Resource>, params: ResourceStorageParams) {
     this.updateParams(params);
@@ -26,11 +26,8 @@ export class ResourceStorage {
   load(args?: any) {
     const qp = !!args ? args : this.queryParams;
     const action = (<any>this.resource).instance[this.queryActionName].bind((<any>this.resource).instance);
-    this._data = action(qp);
+    this.result = Object.assign({$load: this.load.bind(this)}, action(qp));
   }
 
-  get result(): any {
-    return Object.assign({}, this._data, { $load: this.load.bind(this) });
-  }
 
 }

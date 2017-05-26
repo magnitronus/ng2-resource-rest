@@ -13,8 +13,8 @@ export * from './src/SelectStorage';
 export * from './src/Interfaces';
 export declare class ResourceModule {
     private _injector;
-    private appModule;
-    constructor(_injector: Injector, appModule: ApplicationModule);
+    private _appModule;
+    constructor(_injector: Injector, _appModule: ApplicationModule);
     static forRoot(): ModuleWithProviders;
     static forChild(subSet: string): ModuleWithProviders;
 }

@@ -23,11 +23,12 @@ export * from './src/ResourceStorage';
 export * from './src/ResourceStorages';
 export * from './src/SelectStorage';
 var ResourceModule = ResourceModule_1 = (function () {
-    function ResourceModule(_injector, appModule) {
+    function ResourceModule(_injector, _appModule) {
         var _this = this;
         this._injector = _injector;
-        this.appModule = appModule;
-        console.log(this.appModule);
+        this._appModule = _appModule;
+        var metadata = Reflect.getMetadata('annotations', this._appModule.constructor);
+        console.log(metadata);
         var providers = ResourceProviders.providers[ResourceProviders.mainProvidersName];
         providers.forEach(function (provider) { return _this._injector.get(provider.provide); });
     }

@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var ResourceStorage = (function () {
     function ResourceStorage(resource, params) {
         this.resource = resource;
@@ -35,4 +33,4 @@ var ResourceStorage = (function () {
     });
     return ResourceStorage;
 }());
-exports.ResourceStorage = ResourceStorage;
+export { ResourceStorage };

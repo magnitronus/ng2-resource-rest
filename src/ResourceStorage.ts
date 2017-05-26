@@ -1,4 +1,4 @@
-import {ResourceStorageParams, SelectedStorage} from "./Interfaces";
+import {ResourceStorageParams} from "./Interfaces";
 import {Resource} from "./Resource";
 
 
@@ -24,9 +24,9 @@ export class ResourceStorage {
 
   load(args?: any) {
     const qp = !!args ? args : this.queryParams;
-    const action = this.resource[this.queryActionName].bind(this.resource);
+    const action = (<any>this.resource)[this.queryActionName].bind(this.resource);
     action(qp).$observable
-      .subscribe((items) => {
+      .subscribe((items: any) => {
         this._data = items;
       });
   }

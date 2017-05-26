@@ -13,7 +13,7 @@ export * from './src/SelectStorage';
 export * from './src/Interfaces';
 export declare class ResourceModule {
     private _injector;
-    constructor(_injector: Injector, parent: ResourceModule);
+    constructor(_injector: Injector);
     static forRoot(): ModuleWithProviders;
     static forChild(subSet: string): ModuleWithProviders;
 }

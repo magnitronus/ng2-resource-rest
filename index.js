@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { NgModule, Injector, ApplicationModule } from '@angular/core';
+import { NgModule, Injector, ApplicationRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { ResourceProviders } from './src/ResourceProviders';
@@ -23,11 +23,12 @@ export * from './src/ResourceStorage';
 export * from './src/ResourceStorages';
 export * from './src/SelectStorage';
 var ResourceModule = ResourceModule_1 = (function () {
-    function ResourceModule(_injector, _appModule) {
+    function ResourceModule(_injector, _appRef) {
         var _this = this;
         this._injector = _injector;
-        this._appModule = _appModule;
-        var metadata = Reflect.getMetadata('annotations', this._appModule.constructor);
+        this._appRef = _appRef;
+        console.log(this._appRef);
+        var metadata = Reflect.getMetadata('annotations', this._appRef.constructor);
         console.log(metadata);
         var providers = ResourceProviders.providers[ResourceProviders.mainProvidersName];
         providers.forEach(function (provider) { return _this._injector.get(provider.provide); });
@@ -50,7 +51,7 @@ ResourceModule = ResourceModule_1 = __decorate([
     NgModule({
         imports: [CommonModule, HttpModule]
     }),
-    __metadata("design:paramtypes", [Injector, ApplicationModule])
+    __metadata("design:paramtypes", [Injector, ApplicationRef])
 ], ResourceModule);
 export { ResourceModule };
 var ResourceModule_1;

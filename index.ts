@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule, Injector, ApplicationModule } from '@angular/core';
+import { ModuleWithProviders, NgModule, Injector, ApplicationRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { ResourceProviders } from './src/ResourceProviders';
@@ -21,8 +21,9 @@ export * from './src/Interfaces';
 })
 export class ResourceModule {
 
-  constructor(private _injector: Injector, private _appModule: ApplicationModule) {
-    const metadata = (<any>Reflect).getMetadata('annotations',this._appModule.constructor);
+  constructor(private _injector: Injector, private _appRef: ApplicationRef) {
+    console.log(this._appRef);
+    const metadata = (<any>Reflect).getMetadata('annotations',this._appRef.constructor);
     console.log(metadata);
     let providers = ResourceProviders.providers[ResourceProviders.mainProvidersName];
     providers.forEach(provider => this._injector.get((<any>provider).provide));

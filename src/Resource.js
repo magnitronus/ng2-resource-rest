@@ -140,3 +140,4 @@ var Resource = (function () {
     return Resource;
 }());
 export { Resource };
+Resource.instance = undefined;

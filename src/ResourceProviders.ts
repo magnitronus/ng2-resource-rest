@@ -28,7 +28,11 @@ export class ResourceProviders {
     this.providers[subSet].push(
       {
         provide: resource,
-        useFactory: (...args: any[]) => new resource(...args),
+        useFactory: (...args: any[]) => {
+          const instance = new resource(...args);
+          (<any>resource).instance = instance;
+          return instance;
+        },
         deps: deps
       }
     );

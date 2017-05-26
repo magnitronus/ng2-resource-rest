@@ -69,3 +69,11 @@ export declare type ResourceResult<R extends {}> = R & {
     $abortRequest?: () => void;
     $resource?: Resource;
 };
+export declare type SelectedStorage = {
+    $load: (args: any) => void;
+};
+export interface ResourceStorageParams {
+    queryActionName?: string;
+    queryParams?: any;
+    loadImmediately: boolean;
+}

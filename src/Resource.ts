@@ -8,13 +8,17 @@ import { ResourceModel } from './ResourceModel';
 
 export class Resource {
 
+  static instance: any = undefined;
+
   private _url: string = null;
   private _path: string = null;
   private _headers: any = null;
   private _params: any = null;
   private _data: any = null;
 
-  constructor(protected http: Http, protected injector: Injector) {}
+  constructor(protected http: Http, protected injector: Injector) {
+
+  }
 
   /**
    * Get main url of the resource

@@ -7,6 +7,7 @@ import { ResourceModel } from './ResourceModel';
 export declare class Resource {
     protected http: Http;
     protected injector: Injector;
+    static instance: any;
     private _url;
     private _path;
     private _headers;

@@ -19,7 +19,7 @@ var ResourceStorage = (function () {
     ResourceStorage.prototype.load = function (args) {
         var _this = this;
         var qp = !!args ? args : this.queryParams;
-        var action = this.resource[this.queryActionName].bind(this.resource);
+        var action = this.resource.instance[this.queryActionName].bind(this.resource.instance);
         action(qp).$observable
             .subscribe(function (items) {
             _this._data = items;

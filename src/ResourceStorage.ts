@@ -1,5 +1,6 @@
 import {ResourceStorageParams} from "./Interfaces";
 import {Resource} from "./Resource";
+import {Type} from "@angular/core";
 
 
 export class ResourceStorage {
@@ -9,7 +10,7 @@ export class ResourceStorage {
 
   private _data = {};
 
-  constructor(private resource: Resource, params: ResourceStorageParams) {
+  constructor(private resource: Type<Resource>, params: ResourceStorageParams) {
     this.updateParams(params);
     if (this.loadImmediately) {
       this.load();
@@ -24,7 +25,7 @@ export class ResourceStorage {
 
   load(args?: any) {
     const qp = !!args ? args : this.queryParams;
-    const action = (<any>this.resource)[this.queryActionName].bind(this.resource);
+    const action = (<any>this.resource).instance[this.queryActionName].bind((<any>this.resource).instance);
     action(qp).$observable
       .subscribe((items: any) => {
         this._data = items;

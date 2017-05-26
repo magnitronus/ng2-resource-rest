@@ -3,7 +3,7 @@ var ResourceStorages = (function () {
     function ResourceStorages() {
     }
     ResourceStorages.create = function (resource, params) {
-        this.storages[resource.name] = new ResourceStorage(resource.instance, params);
+        this.storages[resource.name] = new ResourceStorage(resource, params);
         return this.storages[resource.name];
     };
     ResourceStorages.get = function (resource, params) {

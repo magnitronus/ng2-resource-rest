@@ -9,7 +9,7 @@ export class ResourceStorages {
   static storages: {[resourceName: string]: ResourceStorage} = {};
 
   static create(resource: Type<Resource>, params?: ResourceStorageParams): ResourceStorage {
-    this.storages[(<any>resource).name] = new ResourceStorage((<any>resource).instance, params);
+    this.storages[(<any>resource).name] = new ResourceStorage(resource, params);
     return this.storages[(<any>resource).name];
   }
 

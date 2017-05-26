@@ -29,9 +29,7 @@ export class ResourceProviders {
       {
         provide: resource,
         useFactory: (...args: any[]) => {
-          const instance = new resource(...args);
-          (<any>resource).instance = instance;
-          return instance;
+          return new resource(...args);
         },
         deps: deps
       }

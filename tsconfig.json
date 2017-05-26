@@ -24,7 +24,10 @@
     "./src/ResourceGlobalConfig.ts",
     "./src/ResourceModel.ts",
     "./src/ResourceParams.ts",
-    "./src/ResourceProviders.ts"
+    "./src/ResourceProviders.ts",
+    "./src/ResourceStorage.ts",
+    "./src/ResourceStorages.ts",
+    "./src/SelectStorage.ts"
   ],
   "exclude": [
     "node_modules",

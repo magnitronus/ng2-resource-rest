@@ -22,11 +22,11 @@ export * from './src/Interfaces';
 export class ResourceModule {
 
   constructor(private _injector: Injector) {
-    console.log(_injector);
-    /*const metadata = (<any>Reflect).getMetadata('annotations',parent.constructor);
-    console.log(metadata);*/
     let providers = ResourceProviders.providers[ResourceProviders.mainProvidersName];
-    providers.forEach(provider => this._injector.get((<any>provider).provide));
+    providers.forEach(provider => {
+      const ResourceType = (<any>provider).provide;
+      ResourceType.instance = this._injector.get(ResourceType);
+    });
   }
 
   static forRoot(): ModuleWithProviders {

@@ -22,9 +22,7 @@ var ResourceProviders = (function () {
                 for (var _i = 0; _i < arguments.length; _i++) {
                     args[_i] = arguments[_i];
                 }
-                var instance = new (resource.bind.apply(resource, [void 0].concat(args)))();
-                resource.instance = instance;
-                return instance;
+                return new (resource.bind.apply(resource, [void 0].concat(args)))();
             },
             deps: deps
         });

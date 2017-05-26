@@ -26,11 +26,11 @@ var ResourceModule = ResourceModule_1 = (function () {
     function ResourceModule(_injector) {
         var _this = this;
         this._injector = _injector;
-        console.log(_injector);
-        /*const metadata = (<any>Reflect).getMetadata('annotations',parent.constructor);
-        console.log(metadata);*/
         var providers = ResourceProviders.providers[ResourceProviders.mainProvidersName];
-        providers.forEach(function (provider) { return _this._injector.get(provider.provide); });
+        providers.forEach(function (provider) {
+            var ResourceType = provider.provide;
+            ResourceType.instance = _this._injector.get(ResourceType);
+        });
     }
     ResourceModule.forRoot = function () {
         return {

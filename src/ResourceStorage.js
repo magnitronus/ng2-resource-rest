@@ -5,6 +5,7 @@ var ResourceStorage = (function () {
         this.queryParams = {};
         this.loadImmediately = true;
         this.updateParams(params);
+        this.result = { $load: this.load.bind(this) };
         if (this.loadImmediately) {
             this.load();
         }

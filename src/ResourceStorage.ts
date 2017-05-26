@@ -12,6 +12,7 @@ export class ResourceStorage {
 
   constructor(private resource: Type<Resource>, params: ResourceStorageParams) {
     this.updateParams(params);
+    this.result = {$load: this.load.bind(this)};
     if (this.loadImmediately) {
       this.load();
     }

@@ -1,4 +1,3 @@
-import { EventEmitter } from "@angular/core";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 var ResourceStorage = (function () {
     function ResourceStorage(resource, params) {
@@ -7,9 +6,29 @@ var ResourceStorage = (function () {
         this.queryActionName = 'query';
         this.queryParams = {};
         this.loadImmediately = true;
-        this.onResultChange = new EventEmitter();
+        this._resultData = [];
         this.updateParams(params);
-        this.result = Object.assign({ $load: this.load.bind(this), $resolved: false }, []);
+        this.result = Object.assign({ $load: this.load.bind(this), $resolved: false }, this._resultData);
+        this.result[Symbol.iterator] = function () {
+            var pointer = 0;
+            var items = _this._resultData;
+            return {
+                next: function () {
+                    if (pointer < items.length) {
+                        return {
+                            done: false,
+                            value: items[pointer++]
+                        };
+                    }
+                    else {
+                        return {
+                            done: true,
+                            value: null
+                        };
+                    }
+                }
+            };
+        };
         this._resultSubject = new BehaviorSubject(this.result);
         this.result.$observable = this._resultSubject.asObservable();
         resource.init.subscribe(function () {
@@ -30,7 +49,9 @@ var ResourceStorage = (function () {
         var qp = !!args ? args : this.queryParams;
         var action = this.resource.instance[this.queryActionName].bind(this.resource.instance);
         action(qp).$observable.subscribe(function (result) {
-            Object.assign(_this.result, result.filter(function (item) { return !!item; }));
+            _this._resultData = result.filter(function (item) { return !!item; });
+            Object.assign(_this.result, _this._resultData);
+            _this.result.$resolved = true;
             _this._resultSubject.next(_this.result);
         });
     };

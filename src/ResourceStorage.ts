@@ -16,7 +16,7 @@ export class ResourceStorage {
   constructor(private resource: Type<Resource>, params: ResourceStorageParams) {
     this.updateParams(params);
     this.result = Object.assign({$load: this.load.bind(this), $resolved: false}, this.resultData);
-    this.result.prototype.next = (): IteratorResult<any> => {
+    this.result.next = (): IteratorResult<any> => {
       if (this._iterationPointer < this.resultData.length) {
           return {
             done: false,

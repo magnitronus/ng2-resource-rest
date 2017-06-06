@@ -9,7 +9,7 @@ var ResourceStorage = (function () {
         this.resultData = [];
         this.updateParams(params);
         this.result = Object.assign({ $load: this.load.bind(this), $resolved: false }, this.resultData);
-        this.result.prototype.next = function () {
+        this.result.next = function () {
             if (_this._iterationPointer < _this.resultData.length) {
                 return {
                     done: false,

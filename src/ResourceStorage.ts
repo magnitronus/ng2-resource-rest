@@ -15,8 +15,9 @@ export class ResourceStorage {
 
   constructor(private resource: Type<Resource>, params: ResourceStorageParams) {
     this.updateParams(params);
-    this.result = Object.assign({$load: this.load.bind(this), $resolved: false}, this.resultData);
-    this.result.next = (): IteratorResult<any> => {
+    this.result = Object.assign(this.resultData, {$load: this.load.bind(this), $resolved: false});
+
+    /*this.result.next = (): IteratorResult<any> => {
       if (this._iterationPointer < this.resultData.length) {
           return {
             done: false,
@@ -32,7 +33,7 @@ export class ResourceStorage {
 
     this.result[Symbol.iterator] = () => {
       return this.result;
-    };
+    };*/
 
     this._resultSubject = new BehaviorSubject(this.result);
     this.result.$observable = this._resultSubject.asObservable();
@@ -64,7 +65,7 @@ export class ResourceStorage {
   }
 
   forceRefresh() {
-    Object.assign(this.result, this.resultData);
+    Object.assign(this.resultData, this.result);
     this.result.$resolved = true;
     this._iterationPointer = 0;
     this._resultSubject.next(this.result);

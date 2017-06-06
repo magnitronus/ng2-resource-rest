@@ -8,24 +8,24 @@ var ResourceStorage = (function () {
         this.loadImmediately = true;
         this.resultData = [];
         this.updateParams(params);
-        this.result = Object.assign({ $load: this.load.bind(this), $resolved: false }, this.resultData);
-        this.result.next = function () {
-            if (_this._iterationPointer < _this.resultData.length) {
-                return {
-                    done: false,
-                    value: _this.resultData[_this._iterationPointer++]
-                };
-            }
-            else {
-                return {
-                    done: true,
-                    value: null
-                };
+        this.result = Object.assign(this.resultData, { $load: this.load.bind(this), $resolved: false });
+        /*this.result.next = (): IteratorResult<any> => {
+          if (this._iterationPointer < this.resultData.length) {
+              return {
+                done: false,
+                value: this.resultData[this._iterationPointer++]
+              };
+            } else {
+              return {
+                done: true,
+                value: null
+              };
             }
         };
-        this.result[Symbol.iterator] = function () {
-            return _this.result;
-        };
+    
+        this.result[Symbol.iterator] = () => {
+          return this.result;
+        };*/
         this._resultSubject = new BehaviorSubject(this.result);
         this.result.$observable = this._resultSubject.asObservable();
         resource.init.subscribe(function () {
@@ -52,7 +52,7 @@ var ResourceStorage = (function () {
         }
     };
     ResourceStorage.prototype.forceRefresh = function () {
-        Object.assign(this.result, this.resultData);
+        Object.assign(this.resultData, this.result);
         this.result.$resolved = true;
         this._iterationPointer = 0;
         this._resultSubject.next(this.result);

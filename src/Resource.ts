@@ -16,6 +16,7 @@ export class Resource {
   protected static _storage: ResourceStorage = undefined;
 
   static init: Observable<any> = Observable.of(undefined);
+  static instance: Resource = undefined;
 
   private _url: string = null;
   private _path: string = null;

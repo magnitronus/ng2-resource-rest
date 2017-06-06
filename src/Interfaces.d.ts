@@ -1,7 +1,6 @@
 import { Observable } from 'rxjs/Rx';
 import { Request, RequestMethod, QueryEncoder } from '@angular/http';
 import { Type } from '@angular/core';
-import { ResourceModel } from './ResourceModel';
 import { Resource } from './Resource';
 import { NgModule } from '@angular/core/src/metadata/ng_module';
 import { TypeDecorator } from '@angular/core/src/util/decorators';
@@ -53,8 +52,6 @@ export interface ResourceActionBase extends ResourceParamsBase {
     initResultObject?: ResourceResponseInitResult;
     map?: ResourceResponseMap;
     filter?: ResourceResponseFilter;
-    model?: Type<ResourceModel<Resource>>;
-    useModel?: boolean;
     rootNode?: string;
     mockCollection?: {
         collection: any;

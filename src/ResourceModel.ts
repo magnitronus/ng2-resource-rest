@@ -9,7 +9,7 @@ export class ResourceModel<R> {
   $resource: R;
 
   static create(data: any = {}, commit: boolean = true) {
-    console.error('Model static create is not availbale anymore. Please use resource.createModel() method');
+    console.error('Model static create is not available anymore. Please use resource.createModel() method');
   }
 
   public $setData(data: any) {

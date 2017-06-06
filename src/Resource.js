@@ -145,3 +145,4 @@ export { Resource };
 Resource._init = new BehaviorSubject(undefined);
 Resource._storage = undefined;
 Resource.init = Observable.of(undefined);
+Resource.instance = undefined;

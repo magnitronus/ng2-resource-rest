@@ -12,6 +12,7 @@ export declare class Resource {
     protected static _init: BehaviorSubject<any>;
     protected static _storage: ResourceStorage;
     static init: Observable<any>;
+    static instance: Resource;
     private _url;
     private _path;
     private _headers;

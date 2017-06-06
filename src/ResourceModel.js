@@ -4,7 +4,7 @@ var ResourceModel = (function () {
     ResourceModel.create = function (data, commit) {
         if (data === void 0) { data = {}; }
         if (commit === void 0) { commit = true; }
-        console.error('Model static create is not availbale anymore. Please use resource.createModel() method');
+        console.error('Model static create is not available anymore. Please use resource.createModel() method');
     };
     ResourceModel.prototype.$setData = function (data) {
         Object.assign(this, data);

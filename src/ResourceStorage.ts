@@ -5,6 +5,7 @@ import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 export class ResourceStorage {
   private queryParams = {};
+  private _iterationPointer = 0;
   private loadImmediately = true;
   private _resultSubject: BehaviorSubject<SelectedStorage<any>>;
 
@@ -15,28 +16,27 @@ export class ResourceStorage {
   constructor(private resource: Type<Resource>, params: ResourceStorageParams) {
     this.updateParams(params);
     this.result = Object.assign({$load: this.load.bind(this), $resolved: false}, this.resultData);
-    this.result[Symbol.iterator] = () => {
-      let pointer = 0;
-      let items = this.resultData;
-      return {
-        next(): IteratorResult<any> {
-          if (pointer < items.length) {
-            return {
-              done: false,
-              value: items[pointer++]
-            };
-          } else {
-            return {
-              done: true,
-              value: null
-            };
-          }
+    this.result.prototype.next = (): IteratorResult<any> => {
+      if (this._iterationPointer < this.resultData.length) {
+          return {
+            done: false,
+            value: this.resultData[this._iterationPointer++]
+          };
+        } else {
+          return {
+            done: true,
+            value: null
+          };
         }
-      };
+    };
+
+    this.result[Symbol.iterator] = () => {
+      return this.result;
     };
 
     this._resultSubject = new BehaviorSubject(this.result);
     this.result.$observable = this._resultSubject.asObservable();
+
     (<any>resource).init.subscribe(() => {
       (<any>this.resource).instance.storage = this;
       if (this.loadImmediately) {
@@ -66,6 +66,7 @@ export class ResourceStorage {
   forceRefresh() {
     Object.assign(this.result, this.resultData);
     this.result.$resolved = true;
+    this._iterationPointer = 0;
     this._resultSubject.next(this.result);
   }
 

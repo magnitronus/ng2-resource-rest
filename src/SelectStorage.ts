@@ -9,9 +9,6 @@ export function SelectStorage(resource: Type<Resource>, params?: ResourceStorage
 
     (<any>target)[propertyKey] = storage.result;
 
-    storage._resultSubject.subscribe((result: any) => {
-      (<any>target)[propertyKey] = result;
-    });
   };
 
 }

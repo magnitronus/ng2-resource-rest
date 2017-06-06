@@ -25,7 +25,9 @@ export class ResourceModule {
     let providers = ResourceProviders.providers[ResourceProviders.mainProvidersName];
     providers.forEach(provider => {
       const ResourceType = (<any>provider).provide;
-      (<any>ResourceType)._init.next(this._injector.get(ResourceType))
+      const resourceInstance = this._injector.get(ResourceType);
+      ResourceType.instance = resourceInstance;
+      (<any>ResourceType)._init.next(resourceInstance);
     });
   }
 

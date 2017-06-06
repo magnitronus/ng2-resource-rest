@@ -45,8 +45,7 @@ var ResourceStorage = (function () {
     };
     ResourceStorage.prototype.load = function (args) {
         var qp = !!args ? args : this.queryParams;
-        this.queryActionName = this.resource.instance.storageLoadRA;
-        var action = this.resource.instance.storageAction;
+        var action = this.resource.instance.storageLoad;
         if (!!action) {
             action.bind(this.resource.instance)(qp);
         }

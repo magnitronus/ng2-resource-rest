@@ -4,7 +4,6 @@ import {Type} from "@angular/core";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 export class ResourceStorage {
-  private queryActionName: string;
   private queryParams = {};
   private loadImmediately = true;
   private _resultSubject: BehaviorSubject<SelectedStorage<any>>;
@@ -56,8 +55,7 @@ export class ResourceStorage {
 
   load(args?: any) {
     const qp = !!args ? args : this.queryParams;
-    this.queryActionName = (<any>this.resource).instance.storageLoadRA;
-    const action = (<any>this.resource).instance.storageAction;
+    const action = (<any>this.resource).instance.storageLoad;
     if (!!action) {
       action.bind((<any>this.resource).instance)(qp);
     } else {

@@ -10,18 +10,19 @@ export class ResourceStorage {
 
   onResultChange: EventEmitter<SelectedStorage<any>> = new EventEmitter();
 
-  private _result: SelectedStorage<any>;
+  result: SelectedStorage<any>;
   private _resultSubject: BehaviorSubject<SelectedStorage<any>>;
 
   constructor(private resource: Type<Resource>, params: ResourceStorageParams) {
     this.updateParams(params);
+    this.result = Object.assign({$load: this.load.bind(this), $resolved: false}, []);
+    this._resultSubject = new BehaviorSubject(this.result);
+    this.result.$observable = this._resultSubject.asObservable();
     (<any>resource).init.subscribe(() => {
       if (this.loadImmediately) {
         this.load();
       }
-       this._result = Object.assign({$load: this.load.bind(this), $resource: (<any>this.resource).instance, $resolved: false}, []);
-       this._resultSubject = new BehaviorSubject(this._result);
-       this._result.$observable = this._resultSubject.asObservable();
+       this.result.$resource = (<any>this.resource).instance;
     });
 
 
@@ -37,20 +38,9 @@ export class ResourceStorage {
     const qp = !!args ? args : this.queryParams;
     const action = (<any>this.resource).instance[this.queryActionName].bind((<any>this.resource).instance);
     action(qp).$observable.subscribe((result: any[]) => {
-      this._result = Object.assign(this._result, result.filter(item => !!item));
-      this._resultSubject.next(this._result);
+      Object.assign(this.result, result.filter(item => !!item));
+      this._resultSubject.next(this.result);
     });
-    this.result = Object.assign({$load: this.load.bind(this)}, action(qp));
   }
-
-  get result() {
-    return this._result;
-  }
-
-  set result(val: any) {
-    this._result = val;
-    this.onResultChange.emit(val);
-  }
-
 
 }

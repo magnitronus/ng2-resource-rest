@@ -7,10 +7,9 @@ export declare class ResourceStorage {
     private queryParams;
     private loadImmediately;
     onResultChange: EventEmitter<SelectedStorage<any>>;
-    private _result;
+    result: SelectedStorage<any>;
     private _resultSubject;
     constructor(resource: Type<Resource>, params: ResourceStorageParams);
     updateParams(params?: ResourceStorageParams): void;
     load(args?: any): void;
-    result: any;
 }

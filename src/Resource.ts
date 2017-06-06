@@ -2,21 +2,29 @@ import { Http, Request } from '@angular/http';
 import { Injector } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { ResourceGlobalConfig } from './ResourceGlobalConfig';
-import { ResourceParamsBase } from './Interfaces';
+import {ResourceParamsBase, ResourceResult} from './Interfaces';
 import { ResourceActionBase } from './Interfaces';
 import { ResourceModel } from './ResourceModel';
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {ResourceStorage} from "./ResourceStorage";
 
 
 export class Resource {
 
   protected static _init = new BehaviorSubject<any>(undefined);
 
+  protected static _storage: ResourceStorage = undefined;
+
+  static init: Observable<any> = Observable.of(undefined);
+
   private _url: string = null;
   private _path: string = null;
   private _headers: any = null;
   private _params: any = null;
   private _data: any = null;
+
+  storageLoad: (...args: any[]) => ResourceResult<any>;
+  storage: ResourceStorage;
 
   constructor(protected http: Http, protected injector: Injector) {
 

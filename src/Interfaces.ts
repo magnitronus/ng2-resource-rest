@@ -5,6 +5,7 @@ import { ResourceModel } from './ResourceModel';
 import { Resource } from './Resource';
 import { NgModule } from '@angular/core/src/metadata/ng_module';
 import { TypeDecorator } from '@angular/core/src/util/decorators';
+import {ResourceStorage} from "./ResourceStorage";
 
 declare module '@angular/core' {
   interface NgModuleExtended extends NgModule {
@@ -69,6 +70,7 @@ export interface ResourceActionBase extends ResourceParamsBase {
   mockCollection?: {collection: any, lookupParams?: any} | any;
   mock?: boolean;
   queryEncoder?: Type<QueryEncoder>;
+  storageAction?: StorageActionFn;
 }
 
 export interface ResourceMethod<I, O> {
@@ -95,7 +97,10 @@ export type SelectedStorage<T> = ResourceResult<T> & {
 };
 
 export interface ResourceStorageParams {
-  queryActionName?: string;
   queryParams?: any;
   loadImmediately: boolean;
+}
+
+export interface StorageActionFn {
+  (storage: ResourceStorage, response: any): void;
 }

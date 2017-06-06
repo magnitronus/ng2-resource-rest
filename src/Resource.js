@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Rx';
 import { ResourceGlobalConfig } from './ResourceGlobalConfig';
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 var Resource = (function () {
@@ -142,3 +143,5 @@ var Resource = (function () {
 }());
 export { Resource };
 Resource._init = new BehaviorSubject(undefined);
+Resource._storage = undefined;
+Resource.init = Observable.of(undefined);

@@ -12,8 +12,8 @@ export * from './src/ResourceModel';
 export * from './src/ResourceParams';
 export * from './src/ResourceProviders';
 export * from './src/ResourceStorage';
-export * from './src/ResourceStorages';
 export * from './src/SelectStorage';
+export * from './src/StorageAction';
 export * from './src/Interfaces';
 
 @NgModule({

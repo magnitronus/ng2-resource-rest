@@ -1,19 +1,24 @@
 import { Http, Request } from '@angular/http';
 import { Injector } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { ResourceParamsBase } from './Interfaces';
+import { ResourceParamsBase, ResourceResult } from './Interfaces';
 import { ResourceActionBase } from './Interfaces';
 import { ResourceModel } from './ResourceModel';
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { ResourceStorage } from "./ResourceStorage";
 export declare class Resource {
     protected http: Http;
     protected injector: Injector;
     protected static _init: BehaviorSubject<any>;
+    protected static _storage: ResourceStorage;
+    static init: Observable<any>;
     private _url;
     private _path;
     private _headers;
     private _params;
     private _data;
+    storageLoad: (...args: any[]) => ResourceResult<any>;
+    storage: ResourceStorage;
     constructor(http: Http, injector: Injector);
     /**
      * Get main url of the resource

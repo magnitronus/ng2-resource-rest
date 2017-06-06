@@ -1,6 +1,7 @@
 import { Headers, Request, RequestMethod, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { ResourceGlobalConfig, TGetParamsMappingType } from './ResourceGlobalConfig';
+import { StorageAction } from "./StorageAction";
 export function ResourceAction(methodOptions) {
     methodOptions = methodOptions || {};
     if (methodOptions.method === undefined) {
@@ -243,6 +244,11 @@ export function ResourceAction(methodOptions) {
                     // Doing the request
                     requestObservable = _this._request(req, methodOptions);
                 }
+                if (!!target.storage && !!methodOptions.storageAction) {
+                    requestObservable = requestObservable.do(function (resp) {
+                        methodOptions.storageAction.bind(target)(target.storage, resp);
+                    });
+                }
                 if (methodOptions.isLazy) {
                     mainObservable = requestObservable;
                 }
@@ -299,6 +305,10 @@ export function ResourceAction(methodOptions) {
             });
             return ret;
         };
+        if (!!methodOptions.storageAction && methodOptions.storageAction === StorageAction.LOAD) {
+            target.storageLoad = target[propertyKey];
+        }
+        ;
     };
 }
 export function setDataToObject(ret, resp) {

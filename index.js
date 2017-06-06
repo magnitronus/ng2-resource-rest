@@ -20,8 +20,8 @@ export * from './src/ResourceModel';
 export * from './src/ResourceParams';
 export * from './src/ResourceProviders';
 export * from './src/ResourceStorage';
-export * from './src/ResourceStorages';
 export * from './src/SelectStorage';
+export * from './src/StorageAction';
 var ResourceModule = ResourceModule_1 = (function () {
     function ResourceModule(_injector) {
         var _this = this;

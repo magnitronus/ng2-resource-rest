@@ -7,9 +7,10 @@ export declare class ResourceStorage {
     private queryParams;
     private loadImmediately;
     private _resultSubject;
-    private _resultData;
     result: SelectedStorage<any>;
+    resultData: any[];
     constructor(resource: Type<Resource>, params: ResourceStorageParams);
     updateParams(params?: ResourceStorageParams): void;
     load(args?: any): void;
+    forceRefresh(): void;
 }

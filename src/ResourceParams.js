@@ -1,8 +1,18 @@
 import { ResourceProviders } from './ResourceProviders';
+import { ResourceStorage } from "./ResourceStorage";
 export function ResourceParams(params) {
     if (params === void 0) { params = {}; }
     return function (target) {
         target.init = target._init.asObservable().filter(function (instance) { return !!instance; });
+        target.getStorage = function (storageParams) {
+            if (!!target._storage) {
+                target._storage.updateParams(storageParams);
+                return target._storage;
+            }
+            else {
+                return new ResourceStorage(target, storageParams);
+            }
+        };
         target.prototype.getResourceOptions = function () {
             return params;
         };

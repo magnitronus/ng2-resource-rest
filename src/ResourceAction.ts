@@ -7,6 +7,7 @@ import { Resource } from './Resource';
 import { ResourceModel } from './ResourceModel';
 import { ConnectableObservable, Observable, Subscriber, Subscription } from 'rxjs/Rx';
 import { ResourceGlobalConfig, TGetParamsMappingType } from './ResourceGlobalConfig';
+import {StorageAction} from "./StorageAction";
 
 
 
@@ -296,6 +297,12 @@ export function ResourceAction(methodOptions?: ResourceActionBase) {
             requestObservable = this._request(req, methodOptions);
           }
 
+          if (!!target.storage && !!methodOptions.storageAction) {
+            requestObservable = requestObservable.do((resp: any) => {
+              methodOptions.storageAction.bind(target)(target.storage, resp);
+            });
+          }
+
 
           if (methodOptions.isLazy) {
 
@@ -384,6 +391,9 @@ export function ResourceAction(methodOptions?: ResourceActionBase) {
 
     };
 
+    if (!!methodOptions.storageAction && methodOptions.storageAction === StorageAction.LOAD) {
+        target.storageLoad = (<any>target)[propertyKey];
+    };
   };
 
 }

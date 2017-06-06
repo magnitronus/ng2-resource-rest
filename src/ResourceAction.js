@@ -244,11 +244,6 @@ export function ResourceAction(methodOptions) {
                     // Doing the request
                     requestObservable = _this._request(req, methodOptions);
                 }
-                if (!!_this.storage && !!methodOptions.storageAction) {
-                    requestObservable = requestObservable.do(function (resp) {
-                        methodOptions.storageAction.bind(_this)(_this.storage, resp);
-                    });
-                }
                 if (methodOptions.isLazy) {
                     mainObservable = requestObservable;
                 }
@@ -299,6 +294,11 @@ export function ResourceAction(methodOptions) {
                             reqSubscr.unsubscribe();
                             ret.$resolved = true;
                         };
+                    });
+                }
+                if (!!_this.storage && !!methodOptions.storageAction) {
+                    mainObservable = mainObservable.do(function (resp) {
+                        methodOptions.storageAction.bind(_this)(_this.storage, resp);
                     });
                 }
                 releaseMainDeferredSubscriber();

@@ -297,13 +297,6 @@ export function ResourceAction(methodOptions?: ResourceActionBase) {
             requestObservable = this._request(req, methodOptions);
           }
 
-          if (!!this.storage && !!methodOptions.storageAction) {
-            requestObservable = requestObservable.do((resp: any) => {
-              methodOptions.storageAction.bind(this)(this.storage, resp);
-            });
-          }
-
-
           if (methodOptions.isLazy) {
 
             mainObservable = requestObservable;
@@ -379,6 +372,12 @@ export function ResourceAction(methodOptions?: ResourceActionBase) {
 
             });
 
+          }
+
+          if (!!this.storage && !!methodOptions.storageAction) {
+            mainObservable = mainObservable.do((resp: any) => {
+              methodOptions.storageAction.bind(this)(this.storage, resp);
+            });
           }
 
           releaseMainDeferredSubscriber();

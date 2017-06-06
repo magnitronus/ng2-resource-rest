@@ -52,7 +52,7 @@ var ResourceStorage = (function () {
         }
     };
     ResourceStorage.prototype.forceRefresh = function () {
-        Object.assign(this.result, this.resultData);
+        this.result = Object.assign([], this.result, this.resultData);
         this.result.$resolved = true;
         this._iterationPointer = 0;
         this._resultSubject.next(this.result);

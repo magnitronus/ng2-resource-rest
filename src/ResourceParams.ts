@@ -8,7 +8,7 @@ export function ResourceParams(params: ResourceParamsBase = {}) {
 
   return function (target: Type<Resource>) {
 
-    target.prototype.init = target.prototype._init.asObservable().filter((instance: Resource) => !!instance);
+    (<any>target).init = (<any>target)._init.asObservable().filter((instance: Resource) => !!instance);
 
     target.prototype.getResourceOptions = function () {
       return params;

@@ -2,7 +2,7 @@ import { ResourceProviders } from './ResourceProviders';
 export function ResourceParams(params) {
     if (params === void 0) { params = {}; }
     return function (target) {
-        target.prototype.init = target.prototype._init.asObservable().filter(function (instance) { return !!instance; });
+        target.init = target._init.asObservable().filter(function (instance) { return !!instance; });
         target.prototype.getResourceOptions = function () {
             return params;
         };

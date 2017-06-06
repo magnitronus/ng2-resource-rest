@@ -44,14 +44,15 @@ var ResourceStorage = (function () {
         this.loadImmediately = params.loadImmediately === false ? false : true;
     };
     ResourceStorage.prototype.load = function (args) {
-        var _this = this;
         var qp = !!args ? args : this.queryParams;
         this.queryActionName = this.resource.instance.storageLoadRA;
-        var action = this.resource.instance[this.queryActionName].bind(this.resource.instance);
-        action(qp).$observable.subscribe(function (result) {
-            _this.resultData = result.filter(function (item) { return !!item; });
-            _this.forceRefresh();
-        });
+        var action = this.resource.instance.storageAction;
+        if (!!action) {
+            action.bind(this.resource.instance)(qp);
+        }
+        else {
+            throw "Storage LOAD action is not defined";
+        }
     };
     ResourceStorage.prototype.forceRefresh = function () {
         Object.assign(this.result, this.resultData);

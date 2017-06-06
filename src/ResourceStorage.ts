@@ -57,11 +57,12 @@ export class ResourceStorage {
   load(args?: any) {
     const qp = !!args ? args : this.queryParams;
     this.queryActionName = (<any>this.resource).instance.storageLoadRA;
-    const action = (<any>this.resource).instance[this.queryActionName].bind((<any>this.resource).instance);
-    action(qp).$observable.subscribe((result: any[]) => {
-      this.resultData = result.filter(item => !!item);
-      this.forceRefresh();
-    });
+    const action = (<any>this.resource).instance.storageAction;
+    if (!!action) {
+      action.bind((<any>this.resource).instance)(qp);
+    } else {
+      throw "Storage LOAD action is not defined";
+    }
   }
 
   forceRefresh() {

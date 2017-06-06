@@ -7,7 +7,9 @@ export function SelectStorage(resource: Type<Resource>, params?: ResourceStorage
   return function (target: any, propertyKey: string) {
     const storage = (<any>resource).getStorage(params);
 
-    (<any>target)[propertyKey] = storage.result;
+    storage._resultSubject.subscribe((result: any) => {
+      (<any>target)[propertyKey] = result;
+    });
 
   };
 

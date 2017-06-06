@@ -29,7 +29,7 @@ var ResourceModule = ResourceModule_1 = (function () {
         var providers = ResourceProviders.providers[ResourceProviders.mainProvidersName];
         providers.forEach(function (provider) {
             var ResourceType = provider.provide;
-            ResourceType.instance = _this._injector.get(ResourceType);
+            ResourceType._init.next(_this._injector.get(ResourceType));
         });
     }
     ResourceModule.forRoot = function () {

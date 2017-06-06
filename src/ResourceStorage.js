@@ -1,6 +1,7 @@
 import { EventEmitter } from "@angular/core";
 var ResourceStorage = (function () {
     function ResourceStorage(resource, params) {
+        var _this = this;
         this.resource = resource;
         this.queryActionName = 'query';
         this.queryParams = {};
@@ -9,7 +10,9 @@ var ResourceStorage = (function () {
         this.updateParams(params);
         this.result = { $load: this.load.bind(this) };
         if (this.loadImmediately) {
-            this.load();
+            resource.init.subscribe(function () {
+                _this.load();
+            });
         }
     }
     ResourceStorage.prototype.updateParams = function (params) {

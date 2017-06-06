@@ -5,10 +5,12 @@ import { ResourceGlobalConfig } from './ResourceGlobalConfig';
 import { ResourceParamsBase } from './Interfaces';
 import { ResourceActionBase } from './Interfaces';
 import { ResourceModel } from './ResourceModel';
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
+
 
 export class Resource {
 
-  static instance: any = undefined;
+  protected static _init = new BehaviorSubject<any>(undefined);
 
   private _url: string = null;
   private _path: string = null;

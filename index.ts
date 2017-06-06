@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule, Injector } from '@angular/core';
+import {ModuleWithProviders, NgModule, Injector} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { ResourceProviders } from './src/ResourceProviders';
@@ -25,7 +25,7 @@ export class ResourceModule {
     let providers = ResourceProviders.providers[ResourceProviders.mainProvidersName];
     providers.forEach(provider => {
       const ResourceType = (<any>provider).provide;
-      ResourceType.instance = this._injector.get(ResourceType);
+      (<any>ResourceType)._init.next(this._injector.get(ResourceType))
     });
   }
 

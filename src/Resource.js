@@ -1,4 +1,5 @@
 import { ResourceGlobalConfig } from './ResourceGlobalConfig';
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 var Resource = (function () {
     function Resource(http, injector) {
         this.http = http;
@@ -140,4 +141,4 @@ var Resource = (function () {
     return Resource;
 }());
 export { Resource };
-Resource.instance = undefined;
+Resource._init = new BehaviorSubject(undefined);

@@ -2,7 +2,6 @@ import {ResourceStorageParams, SelectedStorage} from "./Interfaces";
 import {Resource} from "./Resource";
 import {EventEmitter, Type} from "@angular/core";
 
-
 export class ResourceStorage {
   private queryActionName = 'query';
   private queryParams = {};
@@ -16,7 +15,9 @@ export class ResourceStorage {
     this.updateParams(params);
     this.result = {$load: this.load.bind(this)};
     if (this.loadImmediately) {
-      this.load();
+      (<any>resource).init.subscribe(() => {
+          this.load();
+      });
     }
   }
 

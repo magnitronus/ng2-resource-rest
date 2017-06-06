@@ -4,10 +4,11 @@ import { Observable } from 'rxjs/Rx';
 import { ResourceParamsBase } from './Interfaces';
 import { ResourceActionBase } from './Interfaces';
 import { ResourceModel } from './ResourceModel';
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 export declare class Resource {
     protected http: Http;
     protected injector: Injector;
-    static instance: any;
+    protected static _init: BehaviorSubject<any>;
     private _url;
     private _path;
     private _headers;

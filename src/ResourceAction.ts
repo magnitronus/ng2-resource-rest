@@ -297,9 +297,9 @@ export function ResourceAction(methodOptions?: ResourceActionBase) {
             requestObservable = this._request(req, methodOptions);
           }
 
-          if (!!target.storage && !!methodOptions.storageAction) {
+          if (!!this.storage && !!methodOptions.storageAction) {
             requestObservable = requestObservable.do((resp: any) => {
-              methodOptions.storageAction.bind(target)(target.storage, resp);
+              methodOptions.storageAction.bind(this)(this.storage, resp);
             });
           }
 

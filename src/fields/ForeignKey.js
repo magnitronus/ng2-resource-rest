@@ -22,8 +22,8 @@ export function ForeignKey(params) {
                 var foreignModel;
                 if (foreignId) {
                     // check cached
-                    if (this[propertyKey].cachedId === foreignId) {
-                        return this[propertyKey].cachedData;
+                    if (this.$cachedRelated[propertyKey] && this.$cachedRelated[propertyKey].id === foreignId) {
+                        return this.$cachedRelated[propertyKey].data;
                     }
                     // try to get from storage or from resource
                     var foreignResource = Reflect.getMetadata('resource', params.target);
@@ -39,8 +39,7 @@ export function ForeignKey(params) {
                     ;
                     //cache it and return
                     if (!!foreignModel) {
-                        this[propertyKey].cachedId = foreignId;
-                        this[propertyKey].cachedData = foreignModel;
+                        this.$cachedRelated[propertyKey] = { id: foreignId, data: foreignModel };
                         return foreignModel;
                     }
                 }

@@ -1,5 +1,11 @@
 import { Observable } from 'rxjs/Rx';
 export declare abstract class ResourceModel<R> {
+    protected $cachedRelated: {
+        [key: string]: {
+            id: any;
+            data: any;
+        };
+    };
     $resolved: boolean;
     $observable: Observable<any>;
     $abortRequest: () => void;

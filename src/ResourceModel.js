@@ -1,5 +1,6 @@
 var ResourceModel = (function () {
     function ResourceModel() {
+        this.$cachedRelated = {};
         this.$primaryKey = 'id';
         this.$resource = Reflect.getMetadata('resource', this.constructor);
     }

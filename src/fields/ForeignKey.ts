@@ -30,17 +30,29 @@ export function ForeignKey(params: {target: Type<ResourceModel<any>>, keyField: 
             const foreignId = (<any>this)[params.keyField];
             let foreignModel: ResourceModel<any>;
             if (foreignId) {
+              // check cached
+              if (this[propertyKey].cachedId === foreignId) {
+                return this[propertyKey].cachedData;
+              }
+
+              // try to get from storage or from resource
               const foreignResource: Resource = (<any>Reflect).getMetadata('resource', params.target);
               if (!!foreignResource && !!foreignResource.storage) {
                  foreignModel = getForeignFromStorage(foreignId, foreignResource.storage);
-                 if (!!foreignModel) {
-                   return foreignModel;
-                 } else {
-                   return getForeignFromResource(foreignId, foreignResource);
+                 if (!foreignModel) {
+                   foreignModel = getForeignFromResource(foreignId, foreignResource);
                  }
               } else if (!!foreignResource) {
-                return getForeignFromResource(foreignId, foreignResource);
+                foreignModel = getForeignFromResource(foreignId, foreignResource);
               };
+
+              //cache it and return
+              if (!!foreignModel) {
+                this[propertyKey].cachedId = foreignId;
+                this[propertyKey].cachedData = foreignModel;
+                return foreignModel;
+              }
+
             }
         }
     });

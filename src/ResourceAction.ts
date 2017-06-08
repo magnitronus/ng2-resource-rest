@@ -90,7 +90,7 @@ export function ResourceAction(methodOptions?: ResourceActionBase) {
         }
       }
 
-      if (!methodOptions.isLazy && !mockRequest) {
+      if (!methodOptions.isLazy) {
         ret.$observable = ret.$observable.publish();
         (<ConnectableObservable<any>>ret.$observable).connect();
       }

@@ -68,7 +68,7 @@ export function ResourceAction(methodOptions) {
                     mainDeferredSubscriber = null;
                 }
             }
-            if (!methodOptions.isLazy && !mockRequest) {
+            if (!methodOptions.isLazy) {
                 ret.$observable = ret.$observable.publish();
                 ret.$observable.connect();
             }

@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var ResourceModel = (function () {
     function ResourceModel() {
         this.$primaryKey = 'id';
@@ -57,4 +55,4 @@ var ResourceModel = (function () {
     };
     return ResourceModel;
 }());
-exports.ResourceModel = ResourceModel;
+export { ResourceModel };

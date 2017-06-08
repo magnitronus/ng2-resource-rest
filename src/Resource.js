@@ -1,8 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var Rx_1 = require("rxjs/Rx");
-var ResourceGlobalConfig_1 = require("./ResourceGlobalConfig");
-var BehaviorSubject_1 = require("rxjs/BehaviorSubject");
+import { Observable } from 'rxjs/Rx';
+import { ResourceGlobalConfig } from './ResourceGlobalConfig';
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 var Resource = (function () {
     function Resource(http, injector) {
         this.http = http;
@@ -20,7 +18,7 @@ var Resource = (function () {
      * @returns {string|Promise<string>}
      */
     Resource.prototype.getUrl = function (methodOptions) {
-        return this._url || this._getUrl(methodOptions) || ResourceGlobalConfig_1.ResourceGlobalConfig.url || '';
+        return this._url || this._getUrl(methodOptions) || ResourceGlobalConfig.url || '';
     };
     /**
      * Set resource url
@@ -34,7 +32,7 @@ var Resource = (function () {
      * @returns {string|Promise<string>}
      */
     Resource.prototype.getPath = function (methodOptions) {
-        return this._path || this._getPath(methodOptions) || ResourceGlobalConfig_1.ResourceGlobalConfig.path || '';
+        return this._path || this._getPath(methodOptions) || ResourceGlobalConfig.path || '';
     };
     /**
      * Set resource path
@@ -48,7 +46,7 @@ var Resource = (function () {
      * @returns {any|Promise<any>}
      */
     Resource.prototype.getHeaders = function (methodOptions) {
-        return this._headers || this._getHeaders(methodOptions) || ResourceGlobalConfig_1.ResourceGlobalConfig.headers || {};
+        return this._headers || this._getHeaders(methodOptions) || ResourceGlobalConfig.headers || {};
     };
     /**
      * Set resource headers
@@ -62,7 +60,7 @@ var Resource = (function () {
      * @returns {any|Promise<any>|{}}
      */
     Resource.prototype.getParams = function (methodOptions) {
-        return this._params || this._getParams(methodOptions) || ResourceGlobalConfig_1.ResourceGlobalConfig.params || {};
+        return this._params || this._getParams(methodOptions) || ResourceGlobalConfig.params || {};
     };
     /**
      * Set default resource params
@@ -76,7 +74,7 @@ var Resource = (function () {
      * @returns {any|Promise<any>|{}}
      */
     Resource.prototype.getData = function (methodOptions) {
-        return this._data || this._getData(methodOptions) || ResourceGlobalConfig_1.ResourceGlobalConfig.data || {};
+        return this._data || this._getData(methodOptions) || ResourceGlobalConfig.data || {};
     };
     /**
      * Set default resource params
@@ -145,8 +143,8 @@ var Resource = (function () {
     };
     return Resource;
 }());
-Resource._init = new BehaviorSubject_1.BehaviorSubject(undefined);
+export { Resource };
+Resource._init = new BehaviorSubject(undefined);
 Resource._storage = undefined;
-Resource.init = Rx_1.Observable.of(undefined);
+Resource.init = Observable.of(undefined);
 Resource.instance = undefined;
-exports.Resource = Resource;

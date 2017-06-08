@@ -1,15 +1,14 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var TGetParamsMappingType;
+export var TGetParamsMappingType;
 (function (TGetParamsMappingType) {
     TGetParamsMappingType[TGetParamsMappingType["Plain"] = 0] = "Plain";
     TGetParamsMappingType[TGetParamsMappingType["Bracket"] = 1] = "Bracket";
-})(TGetParamsMappingType = exports.TGetParamsMappingType || (exports.TGetParamsMappingType = {}));
+})(TGetParamsMappingType || (TGetParamsMappingType = {}));
 var ResourceGlobalConfig = (function () {
     function ResourceGlobalConfig() {
     }
     return ResourceGlobalConfig;
 }());
+export { ResourceGlobalConfig };
 ResourceGlobalConfig.url = null;
 ResourceGlobalConfig.path = null;
 ResourceGlobalConfig.headers = {
@@ -20,4 +19,3 @@ ResourceGlobalConfig.params = null;
 ResourceGlobalConfig.data = null;
 ResourceGlobalConfig.getParamsMappingType = TGetParamsMappingType.Plain;
 ResourceGlobalConfig.mockResponses = false;
-exports.ResourceGlobalConfig = ResourceGlobalConfig;

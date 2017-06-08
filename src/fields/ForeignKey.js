@@ -1,6 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-function ForeignKey(params) {
+export function ForeignKey(params) {
     params.resourceGetAction = !!params.resourceGetAction ? params.resourceGetAction : 'get';
     return function (target, propertyKey) {
         Object.defineProperty(target, propertyKey, {
@@ -30,4 +28,3 @@ function ForeignKey(params) {
         });
     };
 }
-exports.ForeignKey = ForeignKey;

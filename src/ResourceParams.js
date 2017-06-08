@@ -1,8 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var ResourceProviders_1 = require("./ResourceProviders");
-var ResourceStorage_1 = require("./ResourceStorage");
-function ResourceParams(params) {
+import { ResourceProviders } from './ResourceProviders';
+import { ResourceStorage } from "./ResourceStorage";
+export function ResourceParams(params) {
     if (params === void 0) { params = {}; }
     return function (target) {
         target.init = target._init.asObservable().filter(function (instance) { return !!instance; });
@@ -12,14 +10,14 @@ function ResourceParams(params) {
                 return target._storage;
             }
             else {
-                return new ResourceStorage_1.ResourceStorage(target, storageParams);
+                return new ResourceStorage(target, storageParams);
             }
         };
         target.prototype.getResourceOptions = function () {
             return params;
         };
         if (params.add2Provides !== false) {
-            ResourceProviders_1.ResourceProviders.add(target, params.providersSubSet);
+            ResourceProviders.add(target, params.providersSubSet);
         }
         if (typeof params.removeTrailingSlash !== 'undefined') {
             target.prototype.removeTrailingSlash = function () {
@@ -53,4 +51,3 @@ function ResourceParams(params) {
         }
     };
 }
-exports.ResourceParams = ResourceParams;

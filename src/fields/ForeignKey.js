@@ -18,7 +18,7 @@ export function ForeignKey(params) {
         }
         Object.defineProperty(target, propertyKey, {
             get: function () {
-                var foreignId = target[params.keyField];
+                var foreignId = this[params.keyField];
                 var foreignModel;
                 if (foreignId) {
                     var foreignResource = Reflect.getMetadata('resource', params.target);

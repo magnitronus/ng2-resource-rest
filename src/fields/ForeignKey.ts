@@ -27,7 +27,7 @@ export function ForeignKey(params: {target: Type<ResourceModel<any>>, keyField: 
 
     Object.defineProperty(target, propertyKey, {
         get: function () {
-            const foreignId = (<any>target)[params.keyField];
+            const foreignId = (<any>this)[params.keyField];
             let foreignModel: ResourceModel<any>;
             if (foreignId) {
               const foreignResource: Resource = (<any>Reflect).getMetadata('resource', params.target);

@@ -13,7 +13,7 @@
     "types": ["node", "jasmine"],
     "lib": ["es2015", "dom"]
   },
-  "files": [
+  "include": [
     "index.ts",
     "ngx-resource.ts",
     "./src/Interfaces.ts",
@@ -27,7 +27,8 @@
     "./src/ResourceProviders.ts",
     "./src/ResourceStorage.ts",
     "./src/StorageAction.ts",
-    "./src/SelectStorage.ts"
+    "./src/SelectStorage.ts",
+    "./src/fields/*.ts"
   ],
   "exclude": [
     "node_modules",

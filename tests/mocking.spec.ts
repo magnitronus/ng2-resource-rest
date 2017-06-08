@@ -1,6 +1,6 @@
 import { TestBed, inject, async } from '@angular/core/testing';
 import { ResourceModule, ResourceGlobalConfig } from '../ngx-resource';
-import { NewsRes } from './test.resource'
+import { NewsRes } from './test.resource';
 
 
 describe('MockingTest', () => {
@@ -15,7 +15,7 @@ describe('MockingTest', () => {
 
   it('should mock query', async(inject([NewsRes], (testres: NewsRes) => {
     testres.query().$observable.subscribe((_news) => {
-      expect(_news.map(_item => {return {id: _item.id, fullText: _item.fullText} })).toEqual([
+      expect(_news.map(_item => {return {id: _item.id, fullText: _item.fullText};})).toEqual([
         {id: 1, fullText: 'First News'},
         {id: 2, fullText: 'Second News'},
       ]);

@@ -1,4 +1,6 @@
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var BehaviorSubject_1 = require("rxjs/BehaviorSubject");
 var ResourceStorage = (function () {
     function ResourceStorage(resource, params) {
         var _this = this;
@@ -26,7 +28,7 @@ var ResourceStorage = (function () {
         this.result[Symbol.iterator] = () => {
           return this.result;
         };*/
-        this._resultSubject = new BehaviorSubject(this.result);
+        this._resultSubject = new BehaviorSubject_1.BehaviorSubject(this.result);
         this.result.$observable = this._resultSubject.asObservable();
         resource.init.subscribe(function () {
             _this.resource.instance.storage = _this;
@@ -60,4 +62,4 @@ var ResourceStorage = (function () {
     };
     return ResourceStorage;
 }());
-export { ResourceStorage };
+exports.ResourceStorage = ResourceStorage;

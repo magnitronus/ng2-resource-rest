@@ -15,6 +15,7 @@ export * from './src/ResourceStorage';
 export * from './src/SelectStorage';
 export * from './src/StorageAction';
 export * from './src/Interfaces';
+export * from './src/fields';
 
 @NgModule({
   imports: [CommonModule, HttpModule]

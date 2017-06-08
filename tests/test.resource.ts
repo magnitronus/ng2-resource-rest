@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { RequestMethod } from '@angular/http';
 import { Resource, ResourceParams, ResourceAction, ResourceMethod } from '../ngx-resource';
 
-interface IQueryInput {
+export interface IQueryInput {
   page?: number;
   perPage?: number;
   dateFrom?: string;
@@ -10,18 +10,18 @@ interface IQueryInput {
   isRead?: string;
 }
 
-interface INewsShort {
+export interface INewsShort {
   id: number;
   title: string;
   text: string;
 }
 
-interface INews extends INewsShort {
+export interface INews extends INewsShort {
   image?: string;
   fullText: string;
 }
 
-interface IComment {
+export interface IComment {
   id: number;
   news_id: number;
   text: string;

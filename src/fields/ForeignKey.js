@@ -1,6 +1,23 @@
-export function ForeignKey(params) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+function ForeignKey(params) {
     params.resourceGetAction = !!params.resourceGetAction ? params.resourceGetAction : 'get';
     return function (target, propertyKey) {
+        function getForeignFromStorage(id, storage) {
+            var foreignModel = storage.resultData.find(function (item) { return item[item.$primaryKey] === id; });
+            if (!!foreignModel) {
+                return foreignModel;
+            }
+        }
+        function getForeignFromResource(id, resource) {
+            var action = resource[params.resourceGetAction];
+            if (!!action) {
+                var queryParams = {};
+                queryParams[(new params.target()).$primaryKey] = id;
+                return action.bind(resource)(queryParams);
+            }
+            ;
+        }
         Object.defineProperty(target, propertyKey, {
             get: function () {
                 var foreignId = target[params.keyField];
@@ -8,19 +25,16 @@ export function ForeignKey(params) {
                 if (foreignId) {
                     var foreignResource = Reflect.getMetadata('resource', params.target);
                     if (!!foreignResource && !!foreignResource.storage) {
-                        foreignModel = foreignResource.storage.resultData.find(function (item) { return item[item.$primaryKey] === foreignId; });
+                        foreignModel = getForeignFromStorage(foreignId, foreignResource.storage);
                         if (!!foreignModel) {
                             return foreignModel;
                         }
+                        else {
+                            return getForeignFromResource(foreignId, foreignResource);
+                        }
                     }
                     else if (!!foreignResource) {
-                        var action = foreignResource[params.resourceGetAction];
-                        if (!!action) {
-                            var queryParams = {};
-                            queryParams[(new params.target()).$primaryKey] = foreignId;
-                            return action.bind(foreignResource)(queryParams);
-                        }
-                        ;
+                        return getForeignFromResource(foreignId, foreignResource);
                     }
                     ;
                 }
@@ -28,3 +42,4 @@ export function ForeignKey(params) {
         });
     };
 }
+exports.ForeignKey = ForeignKey;

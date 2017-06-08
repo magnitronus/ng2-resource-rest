@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -14,12 +15,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-import { RequestMethod } from '@angular/http';
-import { Resource } from './Resource';
-import { ResourceAction } from './ResourceAction';
+Object.defineProperty(exports, "__esModule", { value: true });
+var http_1 = require("@angular/http");
+var Resource_1 = require("./Resource");
+var ResourceAction_1 = require("./ResourceAction");
 var ResourceCRUDBase = (function (_super) {
     __extends(ResourceCRUDBase, _super);
     function ResourceCRUDBase() {
@@ -30,33 +29,28 @@ var ResourceCRUDBase = (function (_super) {
         return this.save(data, callback);
     };
     return ResourceCRUDBase;
-}(Resource));
-export { ResourceCRUDBase };
+}(Resource_1.Resource));
 __decorate([
-    ResourceAction({
+    ResourceAction_1.ResourceAction({
         isArray: true
-    }),
-    __metadata("design:type", Function)
+    })
 ], ResourceCRUDBase.prototype, "query", void 0);
 __decorate([
-    ResourceAction(),
-    __metadata("design:type", Function)
+    ResourceAction_1.ResourceAction()
 ], ResourceCRUDBase.prototype, "get", void 0);
 __decorate([
-    ResourceAction({
-        method: RequestMethod.Post
-    }),
-    __metadata("design:type", Function)
+    ResourceAction_1.ResourceAction({
+        method: http_1.RequestMethod.Post
+    })
 ], ResourceCRUDBase.prototype, "save", void 0);
 __decorate([
-    ResourceAction({
-        method: RequestMethod.Put
-    }),
-    __metadata("design:type", Function)
+    ResourceAction_1.ResourceAction({
+        method: http_1.RequestMethod.Put
+    })
 ], ResourceCRUDBase.prototype, "update", void 0);
 __decorate([
-    ResourceAction({
-        method: RequestMethod.Delete
-    }),
-    __metadata("design:type", Function)
+    ResourceAction_1.ResourceAction({
+        method: http_1.RequestMethod.Delete
+    })
 ], ResourceCRUDBase.prototype, "remove", void 0);
+exports.ResourceCRUDBase = ResourceCRUDBase;

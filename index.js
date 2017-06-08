@@ -1,34 +1,36 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-import { NgModule, Injector } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HttpModule } from '@angular/http';
-import { ResourceProviders } from './src/ResourceProviders';
-export * from './src/Resource';
-export * from './src/ResourceAction';
-export * from './src/ResourceCRUD';
-export * from './src/ResourceCRUDBase';
-export * from './src/ResourceGlobalConfig';
-export * from './src/ResourceModel';
-export * from './src/ResourceParams';
-export * from './src/ResourceProviders';
-export * from './src/ResourceStorage';
-export * from './src/SelectStorage';
-export * from './src/StorageAction';
-export * from './src/fields';
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var common_1 = require("@angular/common");
+var http_1 = require("@angular/http");
+var ResourceProviders_1 = require("./src/ResourceProviders");
+__export(require("./src/Resource"));
+__export(require("./src/ResourceAction"));
+__export(require("./src/ResourceCRUD"));
+__export(require("./src/ResourceCRUDBase"));
+__export(require("./src/ResourceGlobalConfig"));
+__export(require("./src/ResourceModel"));
+__export(require("./src/ResourceParams"));
+__export(require("./src/ResourceProviders"));
+__export(require("./src/ResourceStorage"));
+__export(require("./src/SelectStorage"));
+__export(require("./src/StorageAction"));
+__export(require("./src/fields"));
 var ResourceModule = ResourceModule_1 = (function () {
     function ResourceModule(_injector) {
         var _this = this;
         this._injector = _injector;
         // Create singletones for all resources
-        var providers = ResourceProviders.providers[ResourceProviders.mainProvidersName];
+        var providers = ResourceProviders_1.ResourceProviders.providers[ResourceProviders_1.ResourceProviders.mainProvidersName];
         providers.forEach(function (provider) {
             var ResourceType = provider.provide;
             var resourceInstance = _this._injector.get(ResourceType);
@@ -39,22 +41,21 @@ var ResourceModule = ResourceModule_1 = (function () {
     ResourceModule.forRoot = function () {
         return {
             ngModule: ResourceModule_1,
-            providers: ResourceProviders.providers[ResourceProviders.mainProvidersName]
+            providers: ResourceProviders_1.ResourceProviders.providers[ResourceProviders_1.ResourceProviders.mainProvidersName]
         };
     };
     ResourceModule.forChild = function (subSet) {
         return {
             ngModule: ResourceModule_1,
-            providers: ResourceProviders.providers[subSet] ? ResourceProviders.providers[subSet] : []
+            providers: ResourceProviders_1.ResourceProviders.providers[subSet] ? ResourceProviders_1.ResourceProviders.providers[subSet] : []
         };
     };
     return ResourceModule;
 }());
 ResourceModule = ResourceModule_1 = __decorate([
-    NgModule({
-        imports: [CommonModule, HttpModule]
-    }),
-    __metadata("design:paramtypes", [Injector])
+    core_1.NgModule({
+        imports: [common_1.CommonModule, http_1.HttpModule]
+    })
 ], ResourceModule);
-export { ResourceModule };
+exports.ResourceModule = ResourceModule;
 var ResourceModule_1;

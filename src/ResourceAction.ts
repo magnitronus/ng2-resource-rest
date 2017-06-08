@@ -21,7 +21,7 @@ export function ResourceAction(methodOptions?: ResourceActionBase) {
 
   return function (target: Resource, propertyKey: string) {
 
-    (<any>target)[propertyKey] = function (...args: any[]): ResourceResult<any> | ResourceModel {
+    (<any>target)[propertyKey] = function (...args: any[]): ResourceResult<any> | ResourceModel<any> {
 
       let data = args.length ? args[0] : null;
       let params = args.length > 1 ? args[1] : null;
@@ -37,14 +37,16 @@ export function ResourceAction(methodOptions?: ResourceActionBase) {
 
       let resourceOptions = this.getResourceOptions();
 
+      const mockRequest = ResourceGlobalConfig.mockResponses && resourceOptions.mock !== false && methodOptions.mock !== false && (!!methodOptions.mockCollection || !!resourceOptions.mockCollection);
+
       let isGetRequest = methodOptions.method === RequestMethod.Get;
 
-      let ret: ResourceResult<any> | ResourceModel = null;
+      let ret: ResourceResult<any> | ResourceModel<any> = null;
 
       let map: ResourceResponseMap = methodOptions.map ? methodOptions.map.bind(this) : this.map;
       let filter: ResourceResponseFilter = methodOptions.filter ? methodOptions.filter : this.filter;
       let initObject: ResourceResponseInitResult = methodOptions.initResultObject ?
-        methodOptions.initResultObject : this.initResultObject;
+        methodOptions.initResultObject.bind(this) : this.initResultObject;
 
       if (methodOptions.isLazy) {
         ret = {};
@@ -88,7 +90,7 @@ export function ResourceAction(methodOptions?: ResourceActionBase) {
         }
       }
 
-      if (!methodOptions.isLazy) {
+      if (!methodOptions.isLazy && !mockRequest) {
         ret.$observable = ret.$observable.publish();
         (<ConnectableObservable<any>>ret.$observable).connect();
       }
@@ -277,7 +279,7 @@ export function ResourceAction(methodOptions?: ResourceActionBase) {
 
           let requestObservable: Observable<any>;
 
-          if (ResourceGlobalConfig.mockResponses && resourceOptions.mock !== false && methodOptions.mock !== false && (!!methodOptions.mockCollection || !!resourceOptions.mockCollection)) {
+          if (mockRequest) {
             let mockCollection = !!methodOptions.mockCollection ? methodOptions.mockCollection : {collection: resourceOptions.mockCollection};
             let resp: any = null;
             if (typeof mockCollection === 'function') {

@@ -1,18 +1,16 @@
 import {Observable} from 'rxjs/Rx';
-import {Resource} from "./Resource";
 
 
-export abstract class ResourceModel {
+export abstract class ResourceModel<R> {
 
   $resolved: boolean;
   $observable: Observable<any>;
   $abortRequest: () => void;
-  $resource: Resource;
+  $resource: R;
   $primaryKey: string = 'id';
 
   constructor() {
-    const ResourceType = (<any>Reflect).getMetadata('resource', this.constructor);
-    ResourceType.init.subscribe(() => this.$resource = ResourceType.instance);
+    this.$resource = (<any>Reflect).getMetadata('resource', this.constructor);
   }
 
   static create(data: any = {}, commit: boolean = true) {
@@ -61,7 +59,7 @@ export abstract class ResourceModel {
   }
 
   protected isNew(): boolean {
-    return !(<any>this)['id'];
+    return !(<any>this)[this.$primaryKey];
   }
 
   private $resource_method(methodName: string) {

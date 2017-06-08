@@ -26,12 +26,13 @@ export function ResourceAction(methodOptions) {
                 params = null;
             }
             var resourceOptions = this.getResourceOptions();
+            var mockRequest = ResourceGlobalConfig.mockResponses && resourceOptions.mock !== false && methodOptions.mock !== false && (!!methodOptions.mockCollection || !!resourceOptions.mockCollection);
             var isGetRequest = methodOptions.method === RequestMethod.Get;
             var ret = null;
             var map = methodOptions.map ? methodOptions.map.bind(this) : this.map;
             var filter = methodOptions.filter ? methodOptions.filter : this.filter;
             var initObject = methodOptions.initResultObject ?
-                methodOptions.initResultObject : this.initResultObject;
+                methodOptions.initResultObject.bind(this) : this.initResultObject;
             if (methodOptions.isLazy) {
                 ret = {};
             }
@@ -67,7 +68,7 @@ export function ResourceAction(methodOptions) {
                     mainDeferredSubscriber = null;
                 }
             }
-            if (!methodOptions.isLazy) {
+            if (!methodOptions.isLazy && !mockRequest) {
                 ret.$observable = ret.$observable.publish();
                 ret.$observable.connect();
             }
@@ -224,7 +225,7 @@ export function ResourceAction(methodOptions) {
                     return;
                 }
                 var requestObservable;
-                if (ResourceGlobalConfig.mockResponses && resourceOptions.mock !== false && methodOptions.mock !== false && (!!methodOptions.mockCollection || !!resourceOptions.mockCollection)) {
+                if (mockRequest) {
                     var mockCollection = !!methodOptions.mockCollection ? methodOptions.mockCollection : { collection: resourceOptions.mockCollection };
                     var resp = null;
                     if (typeof mockCollection === 'function') {

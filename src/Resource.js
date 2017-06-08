@@ -10,6 +10,8 @@ var Resource = (function () {
         this._headers = null;
         this._params = null;
         this._data = null;
+        var model = this.initResultObject();
+        Reflect.defineMetadata('resource', this, model.constructor);
     }
     /**
      * Get main url of the resource

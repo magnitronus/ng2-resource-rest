@@ -1,9 +1,7 @@
 var ResourceModel = (function () {
     function ResourceModel() {
-        var _this = this;
         this.$primaryKey = 'id';
-        var ResourceType = Reflect.getMetadata('resource', this.constructor);
-        ResourceType.init.subscribe(function () { return _this.$resource = ResourceType.instance; });
+        this.$resource = Reflect.getMetadata('resource', this.constructor);
     }
     ResourceModel.create = function (data, commit) {
         if (data === void 0) { data = {}; }
@@ -41,7 +39,7 @@ var ResourceModel = (function () {
         return retObj;
     };
     ResourceModel.prototype.isNew = function () {
-        return !this['id'];
+        return !this[this.$primaryKey];
     };
     ResourceModel.prototype.$resource_method = function (methodName) {
         if (!this.$resource) {

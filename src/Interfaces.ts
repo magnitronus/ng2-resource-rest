@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core/src/metadata/ng_module';
 import { TypeDecorator } from '@angular/core/src/util/decorators';
 import {ResourceStorage} from "./ResourceStorage";
 
+
 declare module '@angular/core' {
   interface NgModuleExtended extends NgModule {
     resources?: any[];

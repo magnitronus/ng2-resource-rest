@@ -28,7 +28,8 @@ export class Resource {
   storage: ResourceStorage;
 
   constructor(protected http: Http, protected injector: Injector) {
-
+    let model = this.initResultObject();
+    (<any>Reflect).defineMetadata('resource', this, model.constructor);
   }
 
   /**
@@ -150,7 +151,7 @@ export class Resource {
   }
 
 
-  createModel(): ResourceModel {
+  createModel(): ResourceModel<any> {
     let ret = this.initResultObject();
     ret.$resource = this;
     return ret;

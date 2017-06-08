@@ -18,6 +18,7 @@ export * from './src/ResourceCRUDBase';
 export * from './src/ResourceGlobalConfig';
 export * from './src/ResourceModel';
 export * from './src/ResourceParams';
+export * from './src/ResourceModelParams';
 export * from './src/ResourceProviders';
 export * from './src/ResourceStorage';
 export * from './src/SelectStorage';
@@ -26,6 +27,7 @@ var ResourceModule = ResourceModule_1 = (function () {
     function ResourceModule(_injector) {
         var _this = this;
         this._injector = _injector;
+        // Create singletones for all resources
         var providers = ResourceProviders.providers[ResourceProviders.mainProvidersName];
         providers.forEach(function (provider) {
             var ResourceType = provider.provide;

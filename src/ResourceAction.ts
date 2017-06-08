@@ -21,7 +21,7 @@ export function ResourceAction(methodOptions?: ResourceActionBase) {
 
   return function (target: Resource, propertyKey: string) {
 
-    (<any>target)[propertyKey] = function (...args: any[]): ResourceResult<any> | ResourceModel<Resource> {
+    (<any>target)[propertyKey] = function (...args: any[]): ResourceResult<any> | ResourceModel {
 
       let data = args.length ? args[0] : null;
       let params = args.length > 1 ? args[1] : null;
@@ -39,7 +39,7 @@ export function ResourceAction(methodOptions?: ResourceActionBase) {
 
       let isGetRequest = methodOptions.method === RequestMethod.Get;
 
-      let ret: ResourceResult<any> | ResourceModel<Resource> = null;
+      let ret: ResourceResult<any> | ResourceModel = null;
 
       let map: ResourceResponseMap = methodOptions.map ? methodOptions.map.bind(this) : this.map;
       let filter: ResourceResponseFilter = methodOptions.filter ? methodOptions.filter : this.filter;

@@ -10,6 +10,7 @@ export * from './src/ResourceCRUDBase';
 export * from './src/ResourceGlobalConfig';
 export * from './src/ResourceModel';
 export * from './src/ResourceParams';
+export * from './src/ResourceModelParams';
 export * from './src/ResourceProviders';
 export * from './src/ResourceStorage';
 export * from './src/SelectStorage';
@@ -22,6 +23,7 @@ export * from './src/Interfaces';
 export class ResourceModule {
 
   constructor(private _injector: Injector) {
+    // Create singletones for all resources
     let providers = ResourceProviders.providers[ResourceProviders.mainProvidersName];
     providers.forEach(provider => {
       const ResourceType = (<any>provider).provide;

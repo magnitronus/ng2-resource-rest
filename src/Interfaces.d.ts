@@ -68,7 +68,7 @@ export interface ResourceMethodStrict<IB, IP, O> {
     (body?: IB, params?: IP, callback?: (res: O) => any): ResourceResult<O>;
 }
 export interface ResourceModelParamsBase {
-    providers?: any[];
+    resource: Type<Resource>;
 }
 export declare type ResourceResult<R extends {}> = R & {
     $resolved?: boolean;

@@ -79,7 +79,7 @@ export interface ResourceMethodStrict<IB, IP, O> {
 }
 
 export interface ResourceModelParamsBase {
-  providers?: any[];
+  resource: Type<Resource>;
 }
 
 export type ResourceResult<R extends {}> = R & {

@@ -1,9 +1,12 @@
 import { Observable } from 'rxjs/Rx';
-export declare class ResourceModel<R> {
+import { Resource } from "./Resource";
+export declare abstract class ResourceModel {
     $resolved: boolean;
     $observable: Observable<any>;
     $abortRequest: () => void;
-    $resource: R;
+    $resource: Resource;
+    $primaryKey: string;
+    constructor();
     static create(data?: any, commit?: boolean): void;
     $setData(data: any): this;
     $save(): this;

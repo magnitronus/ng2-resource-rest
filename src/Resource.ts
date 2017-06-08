@@ -150,7 +150,7 @@ export class Resource {
   }
 
 
-  createModel(): ResourceModel<any> {
+  createModel(): ResourceModel {
     let ret = this.initResultObject();
     ret.$resource = this;
     return ret;

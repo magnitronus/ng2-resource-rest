@@ -6,6 +6,7 @@ export * from './src/ResourceCRUDBase';
 export * from './src/ResourceGlobalConfig';
 export * from './src/ResourceModel';
 export * from './src/ResourceParams';
+export * from './src/ResourceModelParams';
 export * from './src/ResourceProviders';
 export * from './src/ResourceStorage';
 export * from './src/SelectStorage';

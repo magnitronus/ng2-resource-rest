@@ -87,7 +87,7 @@ export declare class Resource {
     map(item: any): any;
     filter(item: any): boolean;
     getResourceOptions(): ResourceParamsBase;
-    createModel(): ResourceModel<any>;
+    createModel(): ResourceModel;
     protected _request(req: Request, methodOptions?: ResourceActionBase): Observable<any>;
     private _getUrl(methodOptions?);
     private _getPath(methodOptions?);

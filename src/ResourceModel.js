@@ -1,10 +1,14 @@
 var ResourceModel = (function () {
     function ResourceModel() {
+        var _this = this;
+        this.$primaryKey = 'id';
+        var ResourceType = Reflect.getMetadata('resource', this.constructor);
+        ResourceType.init.subscribe(function () { return _this.$resource = ResourceType.instance; });
     }
     ResourceModel.create = function (data, commit) {
         if (data === void 0) { data = {}; }
         if (commit === void 0) { commit = true; }
-        console.error('Model static create is not available anymore. Please use resource.createModel() method');
+        console.error('Model static create is not available anymore. Please use new YourModel() instead');
     };
     ResourceModel.prototype.$setData = function (data) {
         Object.assign(this, data);
@@ -19,7 +23,7 @@ var ResourceModel = (function () {
         }
     };
     ResourceModel.prototype.$create = function () {
-        return this.$resource_method('create');
+        return this.$resource_method('save');
     };
     ResourceModel.prototype.$update = function () {
         return this.$resource_method('update');
